@@ -1,0 +1,37 @@
+a.user-link {
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #a2a2a2;
+    position: relative;
+}
+
+a:visited {
+    color: #a2a2a2;
+}
+a:hover {
+    color: #afafaf;
+}
+a:active {
+    color: #a3a3a3;
+}
+
+.user-link .picture {
+    border-radius: 50%;
+    background-size: cover;
+    width: 50px;
+    height: 50px;
+    flex: 0 0 50px;
+    overflow: hidden;
+}
+
+.user-link .username {
+    padding: var(--grid-gap);
+    color: white;
+    text-shadow: 0 0 2px var(--dark);
+    transition: all 0.2s ease-in-out;
+    font-size: 0.8em;
+
+}

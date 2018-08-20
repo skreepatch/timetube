@@ -1,0 +1,70 @@
+.Player {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: translateY(-100%);
+    perspective: 10em;
+    opacity: 0;
+    will-change: transform; 
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    z-index: 100;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--light);
+    padding: var(--grid-gap) 0;
+    color: whitesmoke;
+    text-shadow: 0;
+    font-weight: 100;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.Player-video-message,
+.Player-video-description {
+    flex: 0 0 auto;
+    padding: var(--grid-gap);
+}
+
+.Player-video-title {
+    padding: var(--grid-gap);
+    font-size: 1.4em;
+}
+
+.Player-wrapper {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: calc(90vw / (16 / 9));
+    width: 90vw;
+    min-height: 0;
+}
+
+.Player.open {
+    perspective: none;
+    transform: translateY(0%);
+    opacity: 1;
+}
+
+.Player-close {
+    position: absolute;
+    top: var(--grid-gap);
+    right: var(--grid-gap);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-family: sans-serif;
+    font-size: 2em;
+    transform: rotateZ(-45deg);
+    will-change: transform;
+    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+    color: var(--light);
+    cursor: pointer;
+}
+
+.Player-close:hover {
+    transform: rotateZ(45deg);
+    color: #ffffff;
+}

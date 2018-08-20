@@ -1,0 +1,13 @@
+export const UPDATE_ME = "UPDATE_ME";
+export const UPDATE_FRIENDS = "UPDATE_FRIENDS";
+export const ADD_TIMETUBE = "ADD_TIMETUBE";
+export const RECEIVE_TIMETUBE = "RECEIVE_TIMETUBE";
+export const LOGGED_IN_OUT = "LOGGED_IN_OUT";
+export const SET_LOADING = "SET_LOADING";
+export const SET_ACTIVE = "SET_ACTIVE";
+export const SET_ERROR = "SET_ERROR";
+export const UPDATE_SEARCH = "UPDATE_SEARCH";
+export const UPDATE_PLAYING = "UPDATE_PLAYING";
+export const UPDATE_VOLUME = "UPDATE_VOLUME";
+export const UPDATE_UI = "UPDATE_UI";
+export const REQUEST_TIMETUBE = "REQUEST_TIMETUBE";

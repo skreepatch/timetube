@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import '/assets/icomoon/style.css';
+::-webkit-scrollbar {
+    display: none;
+}             /* 1 */
+::-webkit-scrollbar-button {}      /* 2 */
+::-webkit-scrollbar-track {}       /* 3 */
+::-webkit-scrollbar-track-piece {} /* 4 */
+::-webkit-scrollbar-thumb {}       /* 5 */
+::-webkit-scrollbar-corner {}      /* 6 */
+::-webkit-resizer {} 
+
+
+body * {
+    box-sizing: border-box;
+}
+#root {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 100%;
+  max-width: 100%;
+} 
+
+.main.loading {
+    animation: loader 3s infinite;
+}
+
+@keyframes loader {
+    0% {
+        background-position: 0 0;
+    }
+    50% {
+        background-position: -5% -5%;
+    }
+    100% {
+        background-position: 0 0;
+    }
+}
+.Loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0px;
+    background: rgba(0,0,0,0.78);
+    transition: opacity 0.2s ease-in-out;
+}
+.loading .Loader {
+    opacity: 1;
+    z-index: 100; 
+    color: var(--light);
+}
+
+
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  color: var(--text-color);
+}
+
+.primary {
+    background-color: var(--primary);
+}
+
+.error {
+    color: var(--error);
+}
+
+.dark {
+    background-color: var(--dark);
+    color: var(--light);
+}
+
+.light {
+    background-color: var(--light);
+    color: var(--dark);
+}
+
+.active {
+    color: var(--primary);
+}
+
+.hidden {
+    display: none;
+}

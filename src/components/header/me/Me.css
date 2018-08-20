@@ -1,0 +1,13 @@
+.me-component {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 0 1 auto;
+}
+
+.profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 0 1 auto;
+}

@@ -1,0 +1,17 @@
+:root {
+  --primary: #36a9f7;
+  --error: #e9422c;
+  --dark: #383828;
+  --light: #a8a8a8;
+  --active: #4fdf7a;
+  --text-color: #686848;
+  --grid-aspect-ratio: 16/9;
+  --grid-gap: 10px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.1em;
+}

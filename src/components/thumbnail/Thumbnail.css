@@ -1,0 +1,43 @@
+
+.Thumbnail {
+    padding-bottom: 100% / var(--grid-aspect-ratio);
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border: 1px solid #f2f2f2;
+    border-radius: 4px;
+    box-shadow: none;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    transform: translate(0);
+    will-change: transform;
+    overflow: hidden;
+}
+
+.Thumbnail:hover {
+    box-shadow: 4px 4px 8px var(--dark);
+    transform: translate(-2px, -2px);
+}
+
+.Thumbnail-title {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0px;
+    padding: calc(var(--grid-gap) / 2);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background: rgba(0,0,0,0.4);
+    transform: translate(5px, 5px);
+    will-change: transform;
+    opacity: 0;
+    transition: transform 0.3s ease-in-out 0.3s, opacity 0.3s ease-in-out 0.4s;
+}
+
+.Thumbnail:hover .Thumbnail-title {
+    opacity: 1;
+    transform: translateY(0);
+}

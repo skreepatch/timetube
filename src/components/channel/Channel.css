@@ -1,0 +1,7 @@
+.Channel {
+    flex: 100000 1 auto;
+    min-height: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
