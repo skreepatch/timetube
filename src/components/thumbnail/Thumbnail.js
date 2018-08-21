@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import Store from '../../store/index';
+import { store } from '../../store/index';
 import { updatePlaying } from '../../actions/index';
 import './Thumbnail.css';
 
-class Thumbnail extends Component {
+export class Thumbnail extends Component {
     setPlaying() {
-        Store.dispatch(updatePlaying(this.props.video.videoId));
+        store.dispatch(updatePlaying(this.props.video.videoId));
     }
     render() {
         const video = this.props.video;
@@ -21,5 +21,3 @@ class Thumbnail extends Component {
         </div>
     }
 }
-
-export default Thumbnail;

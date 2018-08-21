@@ -161,6 +161,4 @@ class connectedPlayer extends Component {
     }
 }
 
-const Player = connect(mapStateToProps, mapDispatchToProps)(connectedPlayer);
-
-export default Player;
+export const Player = connect(mapStateToProps, mapDispatchToProps)(connectedPlayer);

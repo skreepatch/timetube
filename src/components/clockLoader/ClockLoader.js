@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import classNames from 'class-names';
 import './ClockLoader.css';
 
-class ClockLoader extends Component {
+export class ClockLoader extends Component {
     render() {
         const classes = classNames("Clock-loader-overlay", {
             show: this.props.show
@@ -12,5 +12,3 @@ class ClockLoader extends Component {
             </div>
     }
 }
-
-export default ClockLoader;

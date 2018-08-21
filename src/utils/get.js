@@ -1,4 +1,4 @@
-const GET = (target, path) => {
+export const GET = (target, path) => {
     const segments = path.split('.') || [path];
     const [current, ...parts] = segments;
     const value = target[current];
@@ -8,6 +8,4 @@ const GET = (target, path) => {
     } else {
         return null;
     }
-}
-
-export default GET;
+};

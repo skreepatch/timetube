@@ -1,6 +1,6 @@
-import store from '../store/index';
-import api from '../utils/api';
-import GET from '../utils/get';
+import { store } from '../store/index';
+import { api } from '../utils/api';
+import { GET } from '../utils/get';
 import {
     UPDATE_ME,
     UPDATE_SEARCH,

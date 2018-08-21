@@ -9,6 +9,4 @@ const backgroundImages = [
     // "e3f5d5d9"
 ];
 const randomBackground = backgroundImages[Math.floor(Math.random() * backgroundImages.length)];
-const backgroundImage = `/assets/images/backgrounds/${randomBackground}.png`;
-
-export default backgroundImage;
+export const backgroundImage = `/assets/images/backgrounds/${randomBackground}.png`;

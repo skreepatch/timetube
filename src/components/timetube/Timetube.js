@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import store from '../../store/index';
-import Channel from '../channel/Channel';
-import { updateUi, receiveTimetube, requestTimetube, setActive, updatePlaying, fetchVideos } from '../../actions/index';
+import { store }from '../../store/index';
+import { Channel } from '../channel/Channel';
+import { updateUi, setActive, updatePlaying, fetchVideos } from '../../actions/index';
 import { connect } from 'react-redux';
-import Search from '../search/Search';
-import Player from '../player/Player';
+import { Search } from '../search/Search';
+import { Player } from '../player/Player';
 import './Timetube.css';
-import Toolbar from '../toolbar/Toolbar';
+import { Toolbar } from '../toolbar/Toolbar';
 
 const active = (state) => {
     return state.timetubes[state.active];
-}
+};
 
 const mapStateToProps = (state) => {
     return {
@@ -21,17 +21,15 @@ const mapStateToProps = (state) => {
         query: state.query,
         ui: state.ui
     }
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
     return {
         setActive: (status) => dispatch(setActive(status)),
-        updateUi: (keyValue) => dispatch(updateUi(keyValue)),
-        receiveTimetube: (update) => dispatch(receiveTimetube(update)),
-        requestTimetube: (id) => dispatch(requestTimetube(id))
+        updateUi: (keyValue) => dispatch(updateUi(keyValue))
     }
-}
-
+};
+export const Timetube = connect(mapStateToProps, mapDispatchToProps)(
 class connectedTimetube extends Component {
     
     setActive(id) {
@@ -100,8 +98,4 @@ class connectedTimetube extends Component {
             <Toolbar discoverMore={this.scrapPosts.bind(this)}/>
         </div>
     }
-}
-
-const Timetube = connect(mapStateToProps, mapDispatchToProps)(connectedTimetube);
-
-export default Timetube;
+});

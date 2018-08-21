@@ -5,7 +5,7 @@ const initialState = {
     hashtags: []
 };
 
-const query = (state = initialState, action) => {
+export const query = (state = initialState, action) => {
     switch (action.type) {
         case UPDATE_SEARCH:
             return { ...state, ...action.payload };
@@ -13,6 +13,4 @@ const query = (state = initialState, action) => {
             return state;
     }
 
-}
-
-export default query;
+};

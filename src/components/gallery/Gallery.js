@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Thumbnail from '../thumbnail/Thumbnail';
-import ClockLoader from '../clockLoader/ClockLoader';
+import { Thumbnail } from '../thumbnail/Thumbnail';
+import { ClockLoader } from '../clockLoader/ClockLoader';
 import './Gallery.css';
 
-class Gallery extends Component {
+export class Gallery extends Component {
     render() {
         const videos = Array.from(this.props.videos.values());
         return <div className="Gallery-wrapper">
@@ -18,5 +18,3 @@ class Gallery extends Component {
         </div>
     }
 }
-
-export default Gallery;

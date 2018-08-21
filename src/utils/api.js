@@ -23,7 +23,7 @@ const getEdge = (id, edge) => {
     return fetchEdge(id, edge);
 }
 
-export default {
+export const api = {
     videos: getYoutubesFromPosts,
     edge: getEdge,
     next: getNext

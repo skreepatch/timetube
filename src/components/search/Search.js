@@ -106,6 +106,4 @@ class ConnectedSearch extends Component {
     }
 }
 
-const Search = connect(mapStateToProps, mapDispatchToProps)(ConnectedSearch);
-
-export default Search;
+export const Search = connect(mapStateToProps, mapDispatchToProps)(ConnectedSearch);

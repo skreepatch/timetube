@@ -38,7 +38,7 @@ const timetube = (state = {
 
 const localStorage = window.localStorage;
 
-const timetubes = (state = updateFromLocalStorage(), action) => {
+export const timetubes = (state = updateFromLocalStorage(), action) => {
     switch (action.type) {
         case REQUEST_TIMETUBE:
         case RECEIVE_TIMETUBE:

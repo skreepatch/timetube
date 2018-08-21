@@ -9,9 +9,10 @@ const mapStateToProps = (state) => {
         isLoggedIn: state.isLoggedIn,
         me: state.me
     }
-}
+};
 
-class connectedHeader extends Component {
+export const Header = connect(mapStateToProps)(
+class Header extends Component {
 
     render() {
         const me = () => {
@@ -22,7 +23,7 @@ class connectedHeader extends Component {
             } else {
                 return <Link to="/login">Login with Facebook</Link>
             }
-        }
+        };
         return (
             <div className="header-component">
                 <Logo />
@@ -30,8 +31,4 @@ class connectedHeader extends Component {
             </div>
         );
     }
-}
-
-const Header = connect(mapStateToProps)(connectedHeader);
-
-export default Header;
+});

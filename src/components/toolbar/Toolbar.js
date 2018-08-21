@@ -13,8 +13,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     updateUi: (update) => dispatch(updateUi(update))
-})
+});
 
+export const Toolbar = connect(mapStateToProps, mapDispatchToProps)(
 class Toolbar extends Component {
     discoverMore() {
         this.props.discoverMore();
@@ -56,6 +57,4 @@ class Toolbar extends Component {
             <div className={classes.friends} alt="Toggle Friends" onClick={this.toggleFriends.bind(this)}></div>
         </div>
     }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Toolbar);
+});

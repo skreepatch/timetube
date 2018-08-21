@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setActive, updatePlaying } from '../../actions/index';
-import Gallery from '../gallery/Gallery';
+import { Gallery } from '../gallery/Gallery';
 import './Channel.css';
 
 const activeTimetube = (state) => {
@@ -23,8 +23,9 @@ const mapDispatchToProps = (dispatch) => {
         setActive: (id) => dispatch(setActive(id)),
         updatePlaying: (videoId) => dispatch(updatePlaying(videoId))
     }
-}
+};
 
+export const Channel = connect(mapStateToProps, mapDispatchToProps)(
 class connectedChannel extends Component {
     constructor(props) {
         super(props);
@@ -78,8 +79,4 @@ class connectedChannel extends Component {
                     fetching={this.props.timetube.fetching} />
             </div>)
     }
-}
-
-const Channel = connect(mapStateToProps, mapDispatchToProps)(connectedChannel);
-
-export default Channel;
+})

@@ -12,17 +12,15 @@ const initialState =  {
     }
 };
 
-const ui = (state = initialState, action) => {
+export const ui = (state = initialState, action) => {
     switch (action.type) {
         case UPDATE_UI:
             return {
                 ...state,
                 [action.payload.key]: action.payload.value
-            }
+            };
         default:
             return state;
 
     }
-}
-
-export default ui;
+};

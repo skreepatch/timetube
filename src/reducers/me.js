@@ -4,7 +4,7 @@ const initialState = {
     isLoggedIn: false
 };
 
-const me = (state = initialState, action) => {
+export const me = (state = initialState, action) => {
     switch (action.type) {
         case UPDATE_ME:
             return { ...state, ...action.payload };
@@ -14,6 +14,4 @@ const me = (state = initialState, action) => {
             return state;
     }
 
-}
-
-export default me;
+};

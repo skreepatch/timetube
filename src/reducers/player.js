@@ -1,6 +1,6 @@
 import { UPDATE_PLAYING, UPDATE_VOLUME } from "../constants/action-types";
 
-const player = (state = {
+export const player = (state = {
     playing: "",
     volume: 100,
     paused: false,
@@ -16,6 +16,4 @@ const player = (state = {
             return state;
     }
 
-}
-
-export default player;
+};

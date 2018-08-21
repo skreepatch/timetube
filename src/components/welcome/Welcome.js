@@ -6,11 +6,13 @@ import moment from 'moment';
 const mapStateToProps = (state) => ({
     me: state.me,
     timetube: state.timetubes[state.me.id]
-})
+});
 
+export const Welcome = connect(mapStateToProps)(
 class Welcome extends Component {
     fbLogin() {
-        window.FB.login();
+        debugger;
+        this.props.context.fbSdk.login();
     }
 
     render() {
@@ -43,6 +45,4 @@ class Welcome extends Component {
             </div>
         );
     }
-}
-
-export default connect(mapStateToProps)(Welcome);
+});
