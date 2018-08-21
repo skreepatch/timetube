@@ -84,7 +84,7 @@ export const setError = (error) => ({
 
 /* Async action constructors */
 export const fetchVideos = (timetubeID, accessToken) => {
-    const timetube = store.getState().timetubes[timetubeID];
+    const timetube = store.getState().timetubes[timetubeID] || {};
     const next = GET(timetube, 'paging.next');
     const isDrained = timetube.drained;
     return (dispatch) => {

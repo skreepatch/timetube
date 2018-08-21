@@ -12,6 +12,7 @@ export const edges = {
         return `${id}?fields=posts
           .with(attachment)
           .limit(250){${POST_FIELDS.join(',')}}
+          &include_hidden=true
           &since=${since || '954867754'}&until=${until || getTime()}`;
     },
     friends: (id) => {
