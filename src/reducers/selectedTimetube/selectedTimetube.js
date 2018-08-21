@@ -1,4 +1,4 @@
-import { SET_SELECETED_TIMETUBE } from '../constants/action-types';
+import { SET_SELECETED_TIMETUBE } from '../../constants/action-types';
 
 export const selectedTimetube = (state = "", action) => {
     switch (action.type) {

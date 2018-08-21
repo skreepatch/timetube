@@ -1,4 +1,4 @@
-import { UPDATE_UI } from "../constants/action-types";
+import { UPDATE_UI } from "../../constants/action-types";
 
 const initialState =  {
     error: "",

@@ -1,4 +1,4 @@
-import { UPDATE_FRIENDS } from "../constants/action-types";
+import { UPDATE_FRIENDS } from "../../constants/action-types";
 
 const initialState = { data: [], paging: {} };
 export const friends = (state = initialState, action) => {

@@ -1,16 +1,16 @@
 import { combineReducers } from 'redux';
-import { me } from './me';
-import { friends } from './friends';
-import { timetubes } from './timetube/timetube';
-import { query } from './query';
-import { ui } from './ui';
-import { selectedTimetube } from './selectedTimetube';
-import { player } from './player';
+import { me } from './me/me';
+import { friends } from './friends/friends';
+import { timetubes } from './timetube/timetube.reducers';
+import { query } from './query/query';
+import { ui } from './ui/ui';
+import { selectedTimetube } from './selectedTimetube/selectedTimetube';
+import { player } from './player/player';
 
 export const rootReducer = combineReducers({
     me,
     friends,
-    active: selectedTimetube,
+    selectedTimetube,
     timetubes,
     query,
     player,

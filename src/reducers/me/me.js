@@ -1,4 +1,4 @@
-import { UPDATE_ME, LOGGED_IN_OUT } from "../constants/action-types";
+import { UPDATE_ME, LOGGED_IN_OUT } from "../../constants/action-types";
 
 const initialState = {
     isLoggedIn: false

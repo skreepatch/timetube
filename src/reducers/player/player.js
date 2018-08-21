@@ -1,4 +1,4 @@
-import { UPDATE_PLAYING, UPDATE_VOLUME } from "../constants/action-types";
+import { UPDATE_PLAYING, UPDATE_VOLUME } from "../../constants/action-types";
 
 export const player = (state = {
     playing: "",

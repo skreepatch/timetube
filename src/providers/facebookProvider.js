@@ -1,7 +1,8 @@
 import {APP_ID} from "../config";
 import {STATUSES} from "../utils/fb/login";
 import {store} from "../store";
-import {loggedInOut, setSelectedTimetube, updateMe} from "../actions";
+import {loggedInOut, updateMe} from "../actions";
+import { setSelectedTimetube } from '../reducers/timetube/timetube.actions';
 
 const statusChange = (response) => {
     if (response.status === STATUSES.CONNECTED) {

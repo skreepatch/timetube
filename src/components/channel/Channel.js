@@ -1,22 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setSelectedTimetube, updatePlaying } from '../../actions/index';
+import { updatePlaying } from '../../actions/index';
+import { setSelectedTimetube } from "../../reducers/timetube/timetube.actions";
+import { selected } from "../../reducers/timetube/timetube.selectors";
 import { Gallery } from '../gallery/Gallery';
 import './Channel.css';
 
-const activeTimetube = (state) => {
-    const timetube = state.timetubes[state.active] || {};
-    return timetube;
-}
-
 const mapStateToProps = (state) => {
     return {
-        timetubeId: state.active,
-        timetube: activeTimetube(state),
+        timetubeId: state.selectedTimetube,
+        timetube: selected(state),
         activeVideoId: state.playing,
         query: state.query
     }
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -26,7 +23,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export const Channel = connect(mapStateToProps, mapDispatchToProps)(
-class connectedChannel extends Component {
+class Channel extends Component {
     constructor(props) {
         super(props);
 
@@ -80,4 +77,4 @@ class connectedChannel extends Component {
                     fetching={this.props.timetube.fetching} />
             </div>)
     }
-})
+});

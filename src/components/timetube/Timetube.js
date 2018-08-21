@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
 import { store }from '../../store/index';
 import { Channel } from '../channel/Channel';
-import { updateUi, setSelectedTimetube, updatePlaying, fetchVideos } from '../../actions/index';
+import { updateUi, updatePlaying } from '../../actions/index';
+import { setSelectedTimetube, fetchVideos } from "../../reducers/timetube/timetube.actions";
+import { selected } from "../../reducers/timetube/timetube.selectors";
 import { connect } from 'react-redux';
 import { Search } from '../search/Search';
 import { Player } from '../player/Player';
 import './Timetube.css';
 import { Toolbar } from '../toolbar/Toolbar';
 
-const active = (state) => {
-    return state.timetubes[state.selectedTimetube];
-};
-
 const mapStateToProps = (state) => {
     return {
-        active: state.selectedTimetube,
-        timetube: active(state),
+        selected: state.selectedTimetube,
+        timetube: selected(state),
         me: state.me,
         activeVideoId: state.player.playing,
         query: state.query,
@@ -25,33 +23,31 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setActive: (status) => dispatch(setSelectedTimetube(status)),
+        setSelectedTimetube: (status) => dispatch(setSelectedTimetube(status)),
         updateUi: (keyValue) => dispatch(updateUi(keyValue))
     }
 };
 export const Timetube = connect(mapStateToProps, mapDispatchToProps)(
 class connectedTimetube extends Component {
-    
-    setActive(id) {
-        this.props.setActive(id);
+    setSelectedTimetube(id) {
+        this.props.setSelectedTimetube(id);
     }
     setLoading(value) {
         this.props.updateUi({ key: 'loading', value });
     }
 
     componentWillMount() {
-        this.unlisten = this.props.history.listen((location) => {
+        this.stopListeningToHistory = this.props.history.listen((location) => {
             const id = location.pathname.replace(/\/|channel/g, "");
-
-            if (id && this.props.active !== id) {
-                this.setActive(id);
-                this.scrapPosts(id);
+            if (id && this.props.selected !== id) {
+                this.setSelectedTimetube(id);
+                this.scrapPosts(id)(id);
             }
         });
     }
     componentWillUnmount() {
-        if (this.unlisten) {
-            this.unlisten();
+        if (this.stopListeningToHistory) {
+            this.stopListeningToHistory();
         }
 
     }
@@ -60,13 +56,13 @@ class connectedTimetube extends Component {
             this.props.history.push('/');
             return;
         }
-        const id = this.props.match.params.timetubeId || this.props.active;
+        const id = this.props.match.params.timetubeId || this.props.selected;
 
-        this.setActive(id);
+        this.setSelectedTimetube(id);
         this.scrapPosts(id);
     }
 
-    scrapPosts(id = this.props.active) {
+    scrapPosts(id = this.props.selected) {
         return (id) => {
             store.dispatch(fetchVideos(id, this.props.me.accessToken));
         }
