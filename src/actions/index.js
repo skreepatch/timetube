@@ -9,7 +9,7 @@ import {
     RECEIVE_TIMETUBE,
     LOGGED_IN_OUT,
     SET_LOADING,
-    SET_ACTIVE,
+    SET_SELECETED_TIMETUBE,
     UPDATE_PLAYING,
     UPDATE_VOLUME,
     UPDATE_UI,
@@ -54,8 +54,8 @@ export const requestTimetube = (id) => ({
     payload: { id }
 });
 
-export const setActive = (id) => ({
-    type: SET_ACTIVE,
+export const setSelectedTimetube = (id) => ({
+    type: SET_SELECETED_TIMETUBE,
     payload: id
 });
 

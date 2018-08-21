@@ -30,9 +30,6 @@ class ConnectedSearch extends Component {
         this.state = { ...this.props.query };
 
         this.searchInput = React.createRef();
-
-        this.handleChange = this.handleChange.bind(this);
-        this.searchTag = this.searchTag.bind(this);
     }
 
     componentDidMount() {
@@ -41,13 +38,17 @@ class ConnectedSearch extends Component {
     }
 
     handleChange(event) {
-        this.props.updateSearch({ [event.target.id]: event.target.value.toLowerCase() });
+        return (event) => {
+            this.props.updateSearch({ [event.target.id]: event.target.value.toLowerCase() });
+        }
     }
 
     searchTag(event) {
-        const tag = event.currentTarget.dataset.tag &&
+        return (event) => {
+            const tag = event.currentTarget.dataset.tag &&
             event.currentTarget.dataset.tag !== this.props.query.searchTerm ? event.currentTarget.dataset.tag : "";
-        this.props.updateSearch({ searchTerm: tag });
+            this.props.updateSearch({ searchTerm: tag });
+        }
     }
 
     isDisabled() {
@@ -79,7 +80,7 @@ class ConnectedSearch extends Component {
 
             return (
                 tags.map((tag) => {
-                    return <div className={tagClassNames(tag)} key={tag} onClick={this.searchTag} data-tag={tag}>{tag} <span className="tagCount">{hashtags[tag]}</span></div>;
+                    return <div className={tagClassNames(tag)} key={tag} onClick={this.searchTag()} data-tag={tag}>{tag} <span className="tagCount">{hashtags[tag]}</span></div>;
                 })
             );
         }
@@ -93,7 +94,7 @@ class ConnectedSearch extends Component {
             <div className={searchClass}>
                 <form id="search">
                     <input type="text" id="searchTerm"
-                        onChange={this.handleChange}
+                        onChange={this.handleChange()}
                         value={this.props.query.searchTerm}
                         placeholder="Search for something"
                         ref={this.searchInput} />

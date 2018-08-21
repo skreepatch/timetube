@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setActive, updatePlaying } from '../../actions/index';
+import { setSelectedTimetube, updatePlaying } from '../../actions/index';
 import { Gallery } from '../gallery/Gallery';
 import './Channel.css';
 
@@ -20,7 +20,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setActive: (id) => dispatch(setActive(id)),
+        setActive: (id) => dispatch(setSelectedTimetube(id)),
         updatePlaying: (videoId) => dispatch(updatePlaying(videoId))
     }
 };
@@ -31,7 +31,6 @@ class connectedChannel extends Component {
         super(props);
 
         this.state = { timetube: this.props.timetube, activeVideoId: "" };
-        this.openTheater = this.openTheater.bind(this);
     }
 
     componentWillReceiveProps(props) {
@@ -46,8 +45,10 @@ class connectedChannel extends Component {
     }
 
     openTheater(event) {
-        const videoId = event.currentTarget.dataset.videoid;
-        this.props.updatePlaying(videoId);
+        return (event) => {
+            const videoId = event.currentTarget.dataset.videoid;
+            this.props.updatePlaying(videoId);
+        }
     }
 
     videosCollection() {

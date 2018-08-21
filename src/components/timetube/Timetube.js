@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { store }from '../../store/index';
 import { Channel } from '../channel/Channel';
-import { updateUi, setActive, updatePlaying, fetchVideos } from '../../actions/index';
+import { updateUi, setSelectedTimetube, updatePlaying, fetchVideos } from '../../actions/index';
 import { connect } from 'react-redux';
 import { Search } from '../search/Search';
 import { Player } from '../player/Player';
@@ -9,12 +9,12 @@ import './Timetube.css';
 import { Toolbar } from '../toolbar/Toolbar';
 
 const active = (state) => {
-    return state.timetubes[state.active];
+    return state.timetubes[state.selectedTimetube];
 };
 
 const mapStateToProps = (state) => {
     return {
-        active: state.active,
+        active: state.selectedTimetube,
         timetube: active(state),
         me: state.me,
         activeVideoId: state.player.playing,
@@ -25,7 +25,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setActive: (status) => dispatch(setActive(status)),
+        setActive: (status) => dispatch(setSelectedTimetube(status)),
         updateUi: (keyValue) => dispatch(updateUi(keyValue))
     }
 };
@@ -67,7 +67,9 @@ class connectedTimetube extends Component {
     }
 
     scrapPosts(id = this.props.active) {
-        store.dispatch(fetchVideos(id, this.props.me.accessToken));
+        return (id) => {
+            store.dispatch(fetchVideos(id, this.props.me.accessToken));
+        }
     }
 
     nextVideo() {
@@ -92,10 +94,10 @@ class connectedTimetube extends Component {
 
     render() {
         return <div className="Timetube">
-            <Player videoId={this.props.activeVideoId} next={this.playNext.bind(this)} previous={this.previousVideo.bind(this)}/>
+            <Player videoId={this.props.activeVideoId} next={this.playNext} previous={this.previousVideo}/>
             <Search />
-            <Channel loadMore={this.scrapPosts.bind(this)} />
-            <Toolbar discoverMore={this.scrapPosts.bind(this)}/>
+            <Channel loadMore={this.scrapPosts()} />
+            <Toolbar discoverMore={this.scrapPosts()}/>
         </div>
     }
 });

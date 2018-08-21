@@ -5,7 +5,9 @@ import './Thumbnail.css';
 
 export class Thumbnail extends Component {
     setPlaying() {
-        store.dispatch(updatePlaying(this.props.video.videoId));
+        return () => {
+            store.dispatch(updatePlaying(this.props.video.videoId));
+        }
     }
     render() {
         const video = this.props.video;
@@ -15,7 +17,7 @@ export class Thumbnail extends Component {
         return <div className="Thumbnail" 
         style={style}
         key={video.id} 
-        onClick={this.setPlaying.bind(this)} 
+        onClick={this.setPlaying()}
         >
             <div className="Thumbnail-title">{video.name}</div>
         </div>

@@ -74,28 +74,30 @@ class connectedPlayer extends Component {
     }
 
     onPlayerStateChange(event) {
-        if (event) {
-            const playerStatus = event.data;
-            switch (playerStatus) {
-                case PlayerStatuses.UNSTARTED:
-                    this.setState({ playing: false })
-                    break;
-                case PlayerStatuses.ENDED:
-                    this.onEnded()
-                    break;
-                case PlayerStatuses.PLAYING:
-                    this.setState({ playing: true })
-                    break;
-                case PlayerStatuses.PAUSED:
-                    this.setState({ playing: false })
-                    break;
-                case PlayerStatuses.VIDEO_CUED:
-                    this.setState({ playing: false })
-                    break;
-                default:
-                    break;
+        return () => {
+            if (event) {
+                const playerStatus = event.data;
+                switch (playerStatus) {
+                    case PlayerStatuses.UNSTARTED:
+                        this.setState({ playing: false })
+                        break;
+                    case PlayerStatuses.ENDED:
+                        this.onEnded()
+                        break;
+                    case PlayerStatuses.PLAYING:
+                        this.setState({ playing: true })
+                        break;
+                    case PlayerStatuses.PAUSED:
+                        this.setState({ playing: false })
+                        break;
+                    case PlayerStatuses.VIDEO_CUED:
+                        this.setState({ playing: false })
+                        break;
+                    default:
+                        break;
+                }
+                console.log("player status", playerStatus);
             }
-            console.log("player status", playerStatus);
         }
     }
 
@@ -113,8 +115,8 @@ class connectedPlayer extends Component {
                 'rel': 0
             },
             events: {
-                'onReady': this.onPlayerReady.bind(this),
-                'onStateChange': this.onPlayerStateChange.bind(this)
+                'onReady': this.onPlayerReady(),
+                'onStateChange': this.onPlayerStateChange()
             }
         });
     }
@@ -128,9 +130,11 @@ class connectedPlayer extends Component {
     }
 
     close() {
-        this.player.stopVideo();
-        this.props.updatePlaying('');
-        this.setState({ open: false });
+        return () => {
+            this.player.stopVideo();
+            this.props.updatePlaying('');
+            this.setState({ open: false });
+        }
     }
 
     open() {
@@ -149,7 +153,7 @@ class connectedPlayer extends Component {
         
         return (
             <div className={playerClassnames()}>
-                <div className="Player-close" onClick={this.close.bind(this)}>+</div>
+                <div className="Player-close" onClick={this.close()}>+</div>
                 <div className="Player-video-title">{this.getVideoProperty("name")}</div>
                 <div className="Player-wrapper">
                     <div id="tt-player" ref={this.ytPlayerEl}></div>

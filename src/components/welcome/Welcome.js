@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './Welcome.css';
 import moment from 'moment';
+import {fbSdk} from "../../providers/facebookProvider";
 
 const mapStateToProps = (state) => ({
     me: state.me,
@@ -11,14 +12,15 @@ const mapStateToProps = (state) => ({
 export const Welcome = connect(mapStateToProps)(
 class Welcome extends Component {
     fbLogin() {
-        debugger;
-        this.props.context.fbSdk.login();
+        return () => {
+            fbSdk.login();
+        }
     }
 
     render() {
         const login = () => {
             if (!this.props.me.isLoggedIn) {
-                return <div className="LoginButton" onClick={this.fbLogin.bind(this)}>Login With Facebook</div>
+                return <div className="LoginButton" onClick={this.fbLogin()}>Login With Facebook</div>
             }
         }
 

@@ -4,13 +4,13 @@ import { friends } from './friends';
 import { timetubes } from './timetube/timetube';
 import { query } from './query';
 import { ui } from './ui';
-import { active } from './active';
+import { selectedTimetube } from './selectedTimetube';
 import { player } from './player';
 
 export const rootReducer = combineReducers({
     me,
     friends,
-    active,
+    active: selectedTimetube,
     timetubes,
     query,
     player,

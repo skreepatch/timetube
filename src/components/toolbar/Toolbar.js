@@ -18,13 +18,19 @@ const mapDispatchToProps = (dispatch) => ({
 export const Toolbar = connect(mapStateToProps, mapDispatchToProps)(
 class Toolbar extends Component {
     discoverMore() {
-        this.props.discoverMore();
+        return () => {
+            this.props.discoverMore();
+        }
     }
     toggleSearch() {
-        this.props.updateUi({ key: "search", value: { open: !this.props.ui.search.open } });
+        return () => {
+            this.props.updateUi({ key: "search", value: { open: !this.props.ui.search.open } });
+        }
     }
     toggleFriends() {
-        this.props.updateUi({ key: "friends", value: { open: !this.props.ui.friends.open } });
+        return () => {
+            this.props.updateUi({ key: "friends", value: { open: !this.props.ui.friends.open } });
+        }
     }
     discoveredDate() {
         if (this.props.timetube && this.props.timetube.discoveredUntil) {
@@ -49,12 +55,12 @@ class Toolbar extends Component {
         }
 
         return <div className="Toolbar">
-            <div className={classes.search} alt="Toggle Search" onClick={this.toggleSearch.bind(this)}></div>
+            <div className={classes.search} alt="Toggle Search" onClick={this.toggleSearch()}></div>
             <div className="Timemachine">
                 {this.discoveredDate()}
-                <div className={classes.fetch} alt="Go Back in TimeTube" onClick={this.discoverMore.bind(this)}></div>
+                <div className={classes.fetch} alt="Go Back in TimeTube" onClick={this.discoverMore()}></div>
             </div>
-            <div className={classes.friends} alt="Toggle Friends" onClick={this.toggleFriends.bind(this)}></div>
+            <div className={classes.friends} alt="Toggle Friends" onClick={this.toggleFriends()}></div>
         </div>
     }
 });
