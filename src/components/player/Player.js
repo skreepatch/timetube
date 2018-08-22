@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updatePlaying } from '../../actions/index';
+import { updatePlaying } from "../../store/player/player.actions";
 import classNames from 'classnames';
 import PlayerStatuses from './statuses';
 import './Player.css';

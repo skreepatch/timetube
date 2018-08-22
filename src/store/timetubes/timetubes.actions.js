@@ -1,5 +1,5 @@
-import {RECEIVE_TIMETUBE, REQUEST_TIMETUBE, SET_SELECETED_TIMETUBE} from "../../constants/action-types";
-import {store} from "../../store";
+import {RECEIVE_TIMETUBE, REQUEST_TIMETUBE, SET_ID} from "../../constants/action-types";
+import {store} from "../index";
 import {GET} from "../../utils/get";
 import {api} from "../../utils/api";
 
@@ -11,11 +11,6 @@ export const receiveTimetube = (partialTimetube) => ({
 export const requestTimetube = (id) => ({
     type: REQUEST_TIMETUBE,
     payload: { id }
-});
-
-export const setSelectedTimetube = (id) => ({
-    type: SET_SELECETED_TIMETUBE,
-    payload: id
 });
 
 

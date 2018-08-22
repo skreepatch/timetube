@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { updateUi } from '../../actions/index';
+import { updateUi } from "../../store/ui/ui.actions";
 import classNames from 'class-names';
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -29,7 +29,7 @@ class Toolbar extends Component {
     }
     toggleFriends() {
         return () => {
-            this.props.updateUi({ key: "friends", value: { open: !this.props.ui.friends.open } });
+            this.props.updateUi({ key: "friendsReducers", value: { open: !this.props.ui.friends.open } });
         }
     }
     discoveredDate() {

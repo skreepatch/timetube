@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateVolume } from '../../actions/index';
 
 const mapStateToProps = (state) => {
     return {
         volume: state.volume
     }
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
     return {
         updateVolume: (value) => dispatch(updateVolume(value))
     }
-}
+};
 
-class connectedVolume extends Component {
+export const Volume = connect(mapStateToProps, mapDispatchToProps)(
+class Volume extends Component {
 
     volumeStyle() {
         return {
@@ -36,8 +36,4 @@ class connectedVolume extends Component {
             </div>
         </div>
     }
-}
-
-const Volume = connect(mapStateToProps, mapDispatchToProps)(connectedVolume);
-
-export default Volume;
+});

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateSearch } from '../../actions/index';
+import { updateQuery } from "../../store/query/query.actions";
 import classNames from 'classnames';
 import './Search.css';
 
@@ -10,7 +10,7 @@ const activeTimetube = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateSearch: partialState => dispatch(updateSearch(partialState)),
+        updateQuery: partialState => dispatch(updateQuery(partialState)),
     };
 }
 
@@ -39,7 +39,7 @@ class ConnectedSearch extends Component {
 
     handleChange(event) {
         return (event) => {
-            this.props.updateSearch({ [event.target.id]: event.target.value.toLowerCase() });
+            this.props.updateQuery({ [event.target.id]: event.target.value.toLowerCase() });
         }
     }
 
@@ -47,7 +47,7 @@ class ConnectedSearch extends Component {
         return (event) => {
             const tag = event.currentTarget.dataset.tag &&
             event.currentTarget.dataset.tag !== this.props.query.searchTerm ? event.currentTarget.dataset.tag : "";
-            this.props.updateSearch({ searchTerm: tag });
+            this.props.updateQuery({ searchTerm: tag });
         }
     }
 

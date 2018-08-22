@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import api from '../../utils/api';
-import { updateFriends } from '../../actions/index';
+import { api } from '../../utils/api';
+import { updateFriends } from "../../store/friends/friends.actions";
 import UserLink from '../userLink/User-link';
 
 const mapStateToProps = (state) => {
@@ -9,19 +9,20 @@ const mapStateToProps = (state) => {
         friends: state.friends,
         me: state.me
     }
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
     return {
         updateFriends: (friends) => dispatch(updateFriends(friends))
     }
-}
+};
 
-class connectedFriends extends Component {
+export const Friends = connect(mapStateToProps, mapDispatchToProps)(
+class Friends extends Component {
 
     componentWillReceiveProps(props) {
         if (props.me && props.me.id !== this.props.me.id) {
-            const edgeType = 'friends';
+            const edgeType = 'friendsReducers';
             api.edge(props.me.id, edgeType)
                 .then((friends) => this.props.updateFriends(friends));
         }
@@ -39,8 +40,5 @@ class connectedFriends extends Component {
             </div>
         )
     }
-}
+});
 
-const Friends = connect(mapStateToProps, mapDispatchToProps)(connectedFriends);
-
-export default Friends;

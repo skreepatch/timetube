@@ -1,15 +1,16 @@
 import {APP_ID} from "../config";
 import {STATUSES} from "../utils/fb/login";
 import {store} from "../store";
-import {loggedInOut, updateMe} from "../actions";
-import { setSelectedTimetube } from '../reducers/timetube/timetube.actions';
+import { updateMe, loggedInOut } from "../store/me/me.actions";
+import { setId } from "../store/id/id.actions";
+import { id } from '../store/timetubes/timetubes.actions';
 
 const statusChange = (response) => {
     if (response.status === STATUSES.CONNECTED) {
         window.FB.api(`${response.authResponse.userID}?fields=name,picture,permissions`, (defaultProfile) => {
             const update = {...defaultProfile, ...response.authResponse};
             store.dispatch(updateMe(update));
-            store.dispatch(setSelectedTimetube(update.userID));
+            store.dispatch(setId(update.userID));
             store.dispatch(loggedInOut(true));
         });
     } else {

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { store } from '../../store/index';
-import { updatePlaying } from '../../actions/index';
+import { updatePlaying } from "../../store/player/player.actions";
 import './Thumbnail.css';
 
 export class Thumbnail extends Component {
@@ -13,12 +13,12 @@ export class Thumbnail extends Component {
         const video = this.props.video;
         const style = {
             backgroundImage: `url(${video.thumbnail})`
-        }
+        };
+
         return <div className="Thumbnail" 
-        style={style}
-        key={video.id} 
-        onClick={this.setPlaying()}
-        >
+                style={style}
+                key={video.id}
+                onClick={this.setPlaying()}>
             <div className="Thumbnail-title">{video.name}</div>
         </div>
     }

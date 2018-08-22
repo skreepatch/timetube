@@ -12,7 +12,7 @@ const timetube = (state = {
             return {
                 ...state,
                 fetching: true
-            }
+            };
 
         case RECEIVE_TIMETUBE:
             const { data, paging } = action.payload.update;
@@ -29,12 +29,12 @@ const timetube = (state = {
                 videos,
                 paging,
                 drained
-            }
+            };
         default:
             return state;
     }
 
-}
+};
 
 const localStorage = window.localStorage;
 
@@ -56,7 +56,7 @@ export const timetubes = (state = updateFromLocalStorage(), action) => {
         default:
             return state;
     }
-}
+};
 
 export const updateFromLocalStorage = () => {
     if (!localStorage) {
@@ -70,6 +70,6 @@ export const updateFromLocalStorage = () => {
     }, {});
 
     return timetubes;
-}
+};
 
 export default timetubes;

@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updatePlaying } from '../../actions/index';
-import { setSelectedTimetube } from "../../reducers/timetube/timetube.actions";
-import { selected } from "../../reducers/timetube/timetube.selectors";
+import { id } from "../../store/id/id.selectors";
+import { updatePlaying } from "../../store/player/player.actions";
+import { playing } from "../../store/player/player.selectors";
+import { selected } from "../../store/timetubes/timetubes.selectors";
+import { query } from "../../store/query/query.selectors";
 import { Gallery } from '../gallery/Gallery';
 import './Channel.css';
 
 const mapStateToProps = (state) => {
     return {
-        timetubeId: state.selectedTimetube,
+        id: id(state),
         timetube: selected(state),
-        activeVideoId: state.playing,
-        query: state.query
+        activeVideoId: playing(state),
+        query: query(state)
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setActive: (id) => dispatch(setSelectedTimetube(id)),
         updatePlaying: (videoId) => dispatch(updatePlaying(videoId))
     }
 };

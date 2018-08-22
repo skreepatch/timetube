@@ -1,36 +1,44 @@
 import React, { Component } from 'react';
-import { store }from '../../store/index';
 import { Channel } from '../channel/Channel';
-import { updateUi, updatePlaying } from '../../actions/index';
-import { setSelectedTimetube, fetchVideos } from "../../reducers/timetube/timetube.actions";
-import { selected } from "../../reducers/timetube/timetube.selectors";
 import { connect } from 'react-redux';
 import { Search } from '../search/Search';
 import { Player } from '../player/Player';
 import './Timetube.css';
 import { Toolbar } from '../toolbar/Toolbar';
+import { setId } from "../../store/id/id.actions";
+import { updateUi } from "../../store/ui/ui.actions";
+import { id } from "../../store/id/id.selectors";
+import { selected } from "../../store/timetubes/timetubes.selectors";
+import { me } from "../../store/me/me.selectors";
+import { playing } from "../../store/player/player.selectors";
+import { query } from "../../store/query/query.selectors";
+import { ui } from "../../store/ui/ui.selectors";
+import { fetchVideos } from "../../store/timetubes/timetubes.actions";
+import { updatePlaying } from "../../store/player/player.actions";
 
 const mapStateToProps = (state) => {
     return {
-        selected: state.selectedTimetube,
+        id: id(state),
         timetube: selected(state),
-        me: state.me,
-        activeVideoId: state.player.playing,
-        query: state.query,
-        ui: state.ui
+        me: me(state),
+        activeVideoId: playing(state),
+        query: query(state),
+        ui: ui(state)
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setSelectedTimetube: (status) => dispatch(setSelectedTimetube(status)),
-        updateUi: (keyValue) => dispatch(updateUi(keyValue))
+        setId: (id) => dispatch(setId(id)),
+        updateUi: (keyValue) => dispatch(updateUi(keyValue)),
+        fetchVideos: (userId) => dispatch(fetchVideos(userId)),
+        updatePlaying: (videoId) => dispatch(updatePlaying(videoId))
     }
 };
 export const Timetube = connect(mapStateToProps, mapDispatchToProps)(
 class connectedTimetube extends Component {
-    setSelectedTimetube(id) {
-        this.props.setSelectedTimetube(id);
+    setId(id) {
+        this.props.setId(id);
     }
     setLoading(value) {
         this.props.updateUi({ key: 'loading', value });
@@ -40,7 +48,7 @@ class connectedTimetube extends Component {
         this.stopListeningToHistory = this.props.history.listen((location) => {
             const id = location.pathname.replace(/\/|channel/g, "");
             if (id && this.props.selected !== id) {
-                this.setSelectedTimetube(id);
+                this.setId(id);
                 this.scrapPosts(id)(id);
             }
         });
@@ -58,13 +66,13 @@ class connectedTimetube extends Component {
         }
         const id = this.props.match.params.timetubeId || this.props.selected;
 
-        this.setSelectedTimetube(id);
+        this.setId(id);
         this.scrapPosts(id);
     }
 
     scrapPosts(id = this.props.selected) {
         return (id) => {
-            store.dispatch(fetchVideos(id, this.props.me.accessToken));
+            this.props.fetchVideos(id, this.props.me.accessToken);
         }
     }
 
@@ -81,11 +89,11 @@ class connectedTimetube extends Component {
     }
 
     playNext() {
-        store.dispatch(updatePlaying(this.nextVideo()));
+        this.props.updatePlaying(this.nextVideo());
     }
 
     playPrevious() {
-        store.dispatch(updatePlaying(this.previousVideo()));
+        this.props.updatePlaying(this.previousVideo());
     }
 
     render() {

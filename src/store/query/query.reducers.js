@@ -1,4 +1,4 @@
-import { UPDATE_SEARCH } from "../../constants/action-types";
+import { UPDATE_QUERY } from "../../constants/action-types";
 
 const initialState = {
     searchTerm: "",
@@ -7,7 +7,7 @@ const initialState = {
 
 export const query = (state = initialState, action) => {
     switch (action.type) {
-        case UPDATE_SEARCH:
+        case UPDATE_QUERY:
             return { ...state, ...action.payload };
         default:
             return state;
