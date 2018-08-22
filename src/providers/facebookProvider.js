@@ -2,15 +2,12 @@ import {APP_ID} from "../config";
 import {STATUSES} from "../utils/fb/login";
 import {store} from "../store";
 import { updateMe, loggedInOut } from "../store/me/me.actions";
-import { setId } from "../store/id/id.actions";
-import { id } from '../store/timetubes/timetubes.actions';
 
 const statusChange = (response) => {
     if (response.status === STATUSES.CONNECTED) {
         window.FB.api(`${response.authResponse.userID}?fields=name,picture,permissions`, (defaultProfile) => {
             const update = {...defaultProfile, ...response.authResponse};
             store.dispatch(updateMe(update));
-            store.dispatch(setId(update.userID));
             store.dispatch(loggedInOut(true));
         });
     } else {
@@ -18,7 +15,7 @@ const statusChange = (response) => {
     }
 };
 
-export const initializeFacebookSDK = () => {
+export const initializeFacebookSDK = (statusChangeCallback = statusChange) => {
     window.fbAsyncInit = function () {
         window.FB.init({
             appId: APP_ID,
@@ -27,8 +24,8 @@ export const initializeFacebookSDK = () => {
             version: 'v3.0'
         });
 
-        window.FB.Event.subscribe('auth.statusChange', statusChange);
-        window.FB.getLoginStatus(statusChange);
+        window.FB.Event.subscribe('auth.statusChange', statusChangeCallback);
+        window.FB.getLoginStatus(statusChangeCallback);
     };
 
     (function (d, s, id) {

@@ -1,4 +1,4 @@
-import {RECEIVE_TIMETUBE, REQUEST_TIMETUBE, SET_ID} from "../../constants/action-types";
+import {RECEIVE_TIMETUBE, REQUEST_TIMETUBE} from "../../constants/action-types";
 import {store} from "../index";
 import {GET} from "../../utils/get";
 import {api} from "../../utils/api";
@@ -16,7 +16,6 @@ export const requestTimetube = (id) => ({
 
 /* Async action constructors */
 export const fetchVideos = (timetubeID, accessToken) => {
-    debugger;
     const timetube = store.getState().timetubes[timetubeID] || {};
     const next = GET(timetube, 'paging.next');
     const isDrained = timetube.drained;

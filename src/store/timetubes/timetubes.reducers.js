@@ -42,16 +42,14 @@ export const timetubes = (state = updateFromLocalStorage(), action) => {
     switch (action.type) {
         case REQUEST_TIMETUBE:
         case RECEIVE_TIMETUBE:
-            const storageKey = `tt_${action.payload.id}`;
-            const fromLocalStorage = localStorage.getItem(storageKey);
-            const current = fromLocalStorage ? JSON.parse(fromLocalStorage) : state[action.payload.id];
+            const current = state[action.payload.id];
             const update = { [action.payload.id]: timetube(current, action) }
             
             const newState = {
                 ...state,
                 ...update
             };
-            localStorage.setItem(storageKey, JSON.stringify(newState[action.payload.id]))
+            
             return newState;
         default:
             return state;

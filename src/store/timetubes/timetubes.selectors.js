@@ -1,11 +1,15 @@
-export const selected = (state) => {
-    return state.timetubes[state.selectedTimetube] || {};
+export const getTimetubes = (state) => {
+    return state.timetubes;
 };
 
-export const paging = (state) => {
-    return selected(state).paging;
+export const getSelected = (state) => {
+    return getTimetubes(state)[state.id];
 };
 
-export const videos = (state) => {
-    return selected(state).videos;
+export const getSelectedTimetubePaging = (state) => {
+    return getSelected(state).paging;
+};
+
+export const getSelectedTimetubeVideos = (state) => {
+    return getSelected(state).videos;
 };

@@ -31,7 +31,7 @@ export const edges = {
 
 export const constructQuery = (id, edge, options = {}) => {
     return edges[edge](id, options);
-} 
+};
 
 
 export const fetchEdge = (id, edge, options) => {
@@ -48,4 +48,4 @@ export const fetchEdge = (id, edge, options) => {
             return resolve({ data, paging });
         });
     });
-}
+};

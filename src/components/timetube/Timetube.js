@@ -8,7 +8,7 @@ import { Toolbar } from '../toolbar/Toolbar';
 import { setId } from "../../store/id/id.actions";
 import { updateUi } from "../../store/ui/ui.actions";
 import { id } from "../../store/id/id.selectors";
-import { selected } from "../../store/timetubes/timetubes.selectors";
+import { getSelected } from "../../store/timetubes/timetubes.selectors";
 import { me } from "../../store/me/me.selectors";
 import { playing } from "../../store/player/player.selectors";
 import { query } from "../../store/query/query.selectors";
@@ -19,7 +19,7 @@ import { updatePlaying } from "../../store/player/player.actions";
 const mapStateToProps = (state) => {
     return {
         id: id(state),
-        timetube: selected(state),
+        timetube: getSelected(state),
         me: me(state),
         activeVideoId: playing(state),
         query: query(state),
@@ -36,7 +36,14 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 export const Timetube = connect(mapStateToProps, mapDispatchToProps)(
-class connectedTimetube extends Component {
+class Timetube extends Component {
+    state = {}
+
+    static getDerivedStateFromProps(props, state, snapshot) {
+        console.log('derivedStateFromProps', props, state, snapshot);
+        return {};
+    }
+
     setId(id) {
         this.props.setId(id);
     }
@@ -44,33 +51,45 @@ class connectedTimetube extends Component {
         this.props.updateUi({ key: 'loading', value });
     }
 
-    componentWillMount() {
-        this.stopListeningToHistory = this.props.history.listen((location) => {
-            const id = location.pathname.replace(/\/|channel/g, "");
-            if (id && this.props.selected !== id) {
-                this.setId(id);
-                this.scrapPosts(id)(id);
-            }
-        });
-    }
-    componentWillUnmount() {
-        if (this.stopListeningToHistory) {
-            this.stopListeningToHistory();
-        }
+    // componentWillMount() {
+    //     this.stopListeningToHistory = this.props.history.listen((location) => {
+    //         const id = location.pathname.replace(/\/|channel/g, "");
+    //         if (id && this.props.selected !== id) {
+    //             this.setId(id);
+    //             this.scrapPosts(id)(id);
+    //         }
+    //     });
+    // }
 
-    }
     componentDidMount() {
         if (!this.props.me.isLoggedIn) {
             this.props.history.push('/');
             return;
         }
-        const id = this.props.match.params.timetubeId || this.props.selected;
+        const id = this.props.match.params.timetubeId || this.props.id;
+        if (id) {
+            const scapper = this.scrapPosts();
+            this.setId(id);
+            scapper(id);
+        }
 
-        this.setId(id);
-        this.scrapPosts(id);
     }
 
-    scrapPosts(id = this.props.selected) {
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (snapshot !== this.props.id) {
+            this.setId(this.props.id);
+        }
+        this.scrapPosts()(prevProps.id);
+    }
+
+    getSnapshotBeforeUpdate(prevProps, prevState) {
+        // Are we adding new items to the list?
+        // Capture the scroll position so we can adjust scroll later.
+        const id = prevProps.match.params.timetubeId;
+        return id || null;
+    }
+
+    scrapPosts(id = this.props.id) {
         return (id) => {
             this.props.fetchVideos(id, this.props.me.accessToken);
         }

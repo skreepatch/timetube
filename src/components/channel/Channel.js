@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { id } from "../../store/id/id.selectors";
 import { updatePlaying } from "../../store/player/player.actions";
 import { playing } from "../../store/player/player.selectors";
-import { selected } from "../../store/timetubes/timetubes.selectors";
+import { getSelected } from "../../store/timetubes/timetubes.selectors";
 import { query } from "../../store/query/query.selectors";
 import { Gallery } from '../gallery/Gallery';
 import './Channel.css';
@@ -11,7 +11,7 @@ import './Channel.css';
 const mapStateToProps = (state) => {
     return {
         id: id(state),
-        timetube: selected(state),
+        timetube: getSelected(state),
         activeVideoId: playing(state),
         query: query(state)
     }
