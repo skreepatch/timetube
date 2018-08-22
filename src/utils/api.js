@@ -1,4 +1,4 @@
-import { fetchEdge } from './fb/edges';
+import { fetchEdge } from '../providers/facebook/edges';
 import { filterCollection } from './video';
 
 const getVideosFromPosts = (response) => {

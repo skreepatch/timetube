@@ -1,5 +1,5 @@
 import {APP_ID} from "../config";
-import {STATUSES} from "../utils/fb/login";
+import {STATUSES} from "./facebook/login";
 import {store} from "../store";
 import { updateMe, loggedInOut } from "../store/me/me.actions";
 

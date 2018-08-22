@@ -1,4 +1,4 @@
-import { getTime } from '../date';
+import { getTime } from '../../utils/date';
 
 import {
     POST_FIELDS,
