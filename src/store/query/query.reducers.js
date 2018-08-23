@@ -12,5 +12,4 @@ export const query = (state = initialState, action) => {
         default:
             return state;
     }
-
 };

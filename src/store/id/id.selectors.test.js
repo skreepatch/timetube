@@ -1,4 +1,4 @@
-import { getId } from "./id.selectors";
+import {getId} from "./id.selectors";
 
 describe('id selectors', () => {
     describe('getId', () => {

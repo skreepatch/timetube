@@ -1,11 +1,11 @@
-export const query = (state) => {
+export const getQuery = (state) => {
     return state.query;
 };
 
-export const hashtags = (state) => {
-  return query(state).hashtags;
+export const getHashtags = (state) => {
+  return getQuery(state).hashtags;
 };
 
-export const searchterm = (state) => {
-  return query(state).searchTerm;
+export const getSearchterm = (state) => {
+  return getQuery(state).searchTerm;
 };

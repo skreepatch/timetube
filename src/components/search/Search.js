@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 import { updateQuery } from "../../store/query/query.actions";
 import classNames from 'classnames';
 import './Search.css';
-
-const activeTimetube = (state) => {
-    return state.timetubes[state.active]
-}
+import {getSelected} from "../../store/timetubes/timetubes.selectors";
+import {getUI} from "../../store/ui/ui.selectors";
+import {getQuery} from "../../store/query/query.selectors";
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -16,9 +15,9 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
     return { 
-        query: state.query, 
-        ui: state.ui,
-        activeTimetube: activeTimetube(state) 
+        query: getQuery(state),
+        ui: getUI(state),
+        timetube: getSelected(state)
     }
 }
 
@@ -59,8 +58,8 @@ class ConnectedSearch extends Component {
         const tagClassNames = (tag) => classNames('hashtag', {
             active: this.props.query.searchTerm === tag
         });
-        if (this.props.activeTimetube && this.props.activeTimetube.videos) {
-            const hashtags = Object.values(this.props.activeTimetube.videos).reduce((tags, video) => {
+        if (this.props.timetube && this.props.timetube.videos) {
+            const hashtags = Object.values(this.props.timetube.videos).reduce((tags, video) => {
                 const searchIn = video.message + video.description + video.name;
                 const videoTags = searchIn.match(/(?:^|\s)(?:#)\w+/gim);
                 if (videoTags) {

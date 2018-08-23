@@ -1,4 +1,5 @@
 import { RECEIVE_TIMETUBE, REQUEST_TIMETUBE } from "../../constants/action-types";
+import {updateFromLocalStorage} from "../../providers/localStorageProvider";
 
 const initialItemState = {
     videos: {},
@@ -8,7 +9,7 @@ const initialItemState = {
     drained: false
 };
 
-export const timetubes = (state = {}, action) => {
+export const timetubes = (state = updateFromLocalStorage(), action) => {
     switch (action.type) {
         case REQUEST_TIMETUBE:
             return {

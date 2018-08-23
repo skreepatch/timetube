@@ -9,8 +9,7 @@ const mapStateToProps = (state) => ({
     timetube: state.timetubes[state.me.id]
 });
 
-export const Welcome = connect(mapStateToProps)(
-class Welcome extends Component {
+export class Welcome extends Component {
     fbLogin() {
         return () => {
             fbSdk.login();
@@ -22,7 +21,7 @@ class Welcome extends Component {
             if (!this.props.me.isLoggedIn) {
                 return <div className="LoginButton" onClick={this.fbLogin()}>Login With Facebook</div>
             }
-        }
+        };
 
         const insights = () => {
             if(this.props.me.id && this.props.timetube && this.props.timetube.videos) {
@@ -37,7 +36,7 @@ class Welcome extends Component {
                     {amount()}
                 </div>
             }
-        }
+        };
 
         return (
             <div className="Welcome">
@@ -47,4 +46,6 @@ class Welcome extends Component {
             </div>
         );
     }
-});
+}
+
+export const ConnectedWelcome = connect(mapStateToProps)(Welcome);

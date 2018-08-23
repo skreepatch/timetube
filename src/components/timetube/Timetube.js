@@ -11,7 +11,7 @@ import { getId } from "../../store/id/id.selectors";
 import { getSelected } from "../../store/timetubes/timetubes.selectors";
 import { getMe } from "../../store/me/me.selectors";
 import { getPlaying } from "../../store/player/player.selectors";
-import { query } from "../../store/query/query.selectors";
+import { getQuery } from "../../store/query/query.selectors";
 import { getUI } from "../../store/ui/ui.selectors";
 import { fetchVideos } from "../../store/timetubes/timetubes.actions";
 import { updatePlaying } from "../../store/player/player.actions";
@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
         timetube: getSelected(state),
         me: getMe(state),
         activeVideoId: getPlaying(state),
-        query: query(state),
+        query: getQuery(state),
         ui: getUI(state)
     }
 };
