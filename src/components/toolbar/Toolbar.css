@@ -32,6 +32,7 @@
     border-radius: calc(var(--grid-gap) / 2);
     box-shadow: 0 0 calc(var(--grid-gap) / 2) var(--dark);
     background: whitesmoke;
+    color: var(--dark);
     z-index: 10000;
 }
 

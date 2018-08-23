@@ -1,7 +1,7 @@
-export const player = (state) => {
+export const getPlayer = (state) => {
     return state.player;
 };
 
-export const playing = (state) => {
-    return player(state).playing;
+export const getPlaying = (state) => {
+    return getPlayer(state).playing;
 };

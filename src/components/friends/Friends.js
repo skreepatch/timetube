@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { api } from '../../utils/api';
+import { api } from '../../providers/facebook/api';
 import { updateFriends } from "../../store/friends/friends.actions";
 import UserLink from '../userLink/User-link';
 

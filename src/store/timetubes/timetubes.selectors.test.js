@@ -3,7 +3,7 @@ import { getSelected, getTimetubes } from "./timetubes.selectors";
 describe('timetube selectors', () => {
     describe('getTimetubes selector', () => {
         it('should return timetubes store section from state', () => {
-            const timetubes = 'Hey'
+            const timetubes = 'Hey';
             const state = { timetubes: timetubes };
             expect(getTimetubes(state)).toBe(timetubes);
         });

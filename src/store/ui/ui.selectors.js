@@ -1,32 +1,32 @@
-export const ui = (state) => {
+export const getUI = (state) => {
   return state.ui;
 };
 
-export const loading = (state) => {
-    return ui(state).loading;
+export const getLoading = (state) => {
+    return getUI(state).loading;
 };
 
-export const error = (state) => {
-    return ui(state).error;
+export const getError = (state) => {
+    return getUI(state).error;
 };
 
-export const friends = (state) => {
-    return ui(state).friends;
+export const getFriends = (state) => {
+    return getUI(state).friends;
 };
 
-export const friendsOpen = (state) => {
-  return friends(state).open;
+export const getFriendsOpen = (state) => {
+  return getFriends(state).open;
 };
 
 
-export const friendsFetching = (state) => {
-    return friends(state).fetching;
+export const getFriendsFetching = (state) => {
+    return getFriends(state).fetching;
 };
 
-export const search = (state) => {
-  return state.search;
+export const getSearch = (state) => {
+  return getUI(state).search;
 };
 
-export const searchOpen = (state) => {
-    return search(state).open;
+export const getSearchOpen = (state) => {
+    return getSearch(state).open;
 };

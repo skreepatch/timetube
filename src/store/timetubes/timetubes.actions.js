@@ -1,7 +1,7 @@
 import {RECEIVE_TIMETUBE, REQUEST_TIMETUBE} from "../../constants/action-types";
 import {store} from "../index";
 import {GET} from "../../utils/get";
-import {api} from "../../utils/api";
+import {api} from "../../providers/facebook/api";
 
 export const receiveTimetube = (partialTimetube) => ({
     type: RECEIVE_TIMETUBE,

@@ -17,7 +17,7 @@ export const filterCollection = (collection) => {
 
         return acc;
     }, filtered);
-}
+};
 export const youtube_parser = (url) => {
     url = decodeURIComponent(url);
     const regExp = /^.*((youtu.be\/)|(youtube.com\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
@@ -28,7 +28,7 @@ export const youtube_parser = (url) => {
     } else {
         return false;
     }
-}
+};
 
 export const parseVideoURL = (url) => {
     let retVal = {};
@@ -53,7 +53,7 @@ export const parseVideoURL = (url) => {
     } else {
         return null;
     }
-}
+};
 
 export const sortBy = (list, key) => {
     return list.sort((a, b) => {
@@ -61,4 +61,4 @@ export const sortBy = (list, key) => {
         const dateB = new Date(b[key]).getTime() / 1000;
         return dateB - dateA;
     });
-}
+};

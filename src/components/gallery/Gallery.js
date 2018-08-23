@@ -8,7 +8,7 @@ export class Gallery extends Component {
         const videos = Array.from(this.props.videos.values());
         return <div className="Gallery-wrapper">
             <div className="Gallery">
-                <ClockLoader show={this.props.fetching} />
+                <ClockLoader show={this.props.showLoader} />
                 {
                     videos.map((video) => (
                         <Thumbnail video={video} key={video.id} />

@@ -1,7 +1,7 @@
-export const me = (state) => {
+export const getMe = (state) => {
     return state.me;
 };
 
-export const loggedIn = (state) => {
-    return me(state).isLoggedIn;
+export const getLoggedIn = (state) => {
+    return getMe(state).isLoggedIn;
 };

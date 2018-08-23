@@ -1,3 +1,3 @@
-export const id = (state) => {
+export const getId = (state) => {
     return state.id;
 };
