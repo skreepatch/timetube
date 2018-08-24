@@ -57,7 +57,7 @@ class connectedPlayer extends Component {
     componentDidUpdate(props) {
         if (props.playing && this.player) {
             this.player.loadVideoById(props.playing);
-            
+
             this.setState({ open: true });
         }
     }
