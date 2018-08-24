@@ -6,7 +6,7 @@ import {store} from "./store/index";
 import {Header} from './components/header/Header';
 import {backgroundImage} from './utils/random-backgrounds/random-backgrounds';
 import './App.css';
-import {initializeFacebookSDK} from "./providers/facebookProvider";
+import {initializeFacebookSDK} from "./providers/facebook/facebook.provider";
 import {routes} from "./routes";
 
 export class App extends React.Component {

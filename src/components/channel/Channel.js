@@ -7,7 +7,7 @@ import { Gallery } from '../gallery/Gallery';
 import './Channel.css';
 import {getMe} from "../../store/me/me.selectors";
 import { arrayFromObject } from "../../utils/array-from-object";
-import {saveToLocalStorage} from "../../providers/localStorageProvider";
+import {saveToLocalStorage} from "../../providers/localStorage.provider";
 
 const mapStateToProps = (state) => {
     return {

@@ -1,5 +1,5 @@
 import { RECEIVE_TIMETUBE, REQUEST_TIMETUBE } from "../../constants/action-types";
-import {updateFromLocalStorage} from "../../providers/localStorageProvider";
+import {updateFromLocalStorage} from "../../providers/localStorage.provider";
 
 const initialItemState = {
     videos: {},

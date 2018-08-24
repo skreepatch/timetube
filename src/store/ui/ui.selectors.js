@@ -30,3 +30,11 @@ export const getSearch = (state) => {
 export const getSearchOpen = (state) => {
     return getSearch(state).open;
 };
+
+export const getPlayer = (state) => {
+    return getUI(state).player;
+};
+
+export const getPlayerOpen = (state) => {
+    return getPlayer(state).open;
+};

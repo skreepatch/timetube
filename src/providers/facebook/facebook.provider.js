@@ -1,7 +1,7 @@
-import {APP_ID} from "../config";
-import {STATUSES} from "./facebook/login";
-import {store} from "../store";
-import { updateMe, loggedInOut } from "../store/me/me.actions";
+import {APP_ID} from "../../config";
+import {STATUSES} from "./login";
+import {store} from "../../store/index";
+import { updateMe, loggedInOut } from "../../store/me/me.actions";
 
 const statusChange = (response) => {
     if (response.status === STATUSES.CONNECTED) {

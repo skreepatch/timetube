@@ -62,8 +62,7 @@ class Timetube extends Component {
     }
 
     getSnapshotBeforeUpdate(prevProps, prevState) {
-        const id = prevProps.match.params.timetubeId;
-        return id;
+        return prevProps.match.params.timetubeId;
     }
 
     scrapPosts(id = this.props.id) {

@@ -4,20 +4,23 @@ import { updatePlaying } from "../../store/player/player.actions";
 import classNames from 'classnames';
 import PlayerStatuses from './statuses';
 import './Player.css';
-const IFRAME_API_URL = "https://www.youtube.com/iframe_api";
+import {getSelected} from "../../store/timetubes/timetubes.selectors";
+import {getPlaying} from "../../store/player/player.selectors";
+import {initializeYoutubeIframeApi, initYTApi} from "../../providers/youtube/youtube.provider";
 
 const currentVideo = (state) => {
-    const timetube = state.timetubes[state.active];
-    if (timetube && state.player.playing) {
-        return timetube.videos[state.player.playing];
+    const timetube = getSelected(state);
+    const playing = getPlaying(state);
+    if (timetube && playing) {
+        return timetube.videos[playing];
     }
     return null;
-}
+};
 
 const mapStateToProps = (state) => ({
-    timetube: state.timetubes[state.active],
+    timetube: getSelected(state),
     currentVideo: currentVideo(state),
-    playing: state.player.playing
+    playing: getPlaying(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -28,33 +31,40 @@ class connectedPlayer extends Component {
 
     constructor() {
         super();
-        this.ytPlayerEl = React.createRef();
 
-        this.state = { open: false, playing: false };
+        this.YTPlayerRef = React.createRef();
+        this.state = { open: false };
     }
 
     componentDidMount() {
-        window.onYouTubeIframeAPIReady = () => {
-            this.player = this.initYoutubePlayer();
-        };
-        this.setState({ open: this.props.videoId, playing: this.props.playing }, this.initYTApi);
+        this.initPlayer();
     }
 
-    componentWillReceiveProps(props) {
+    initPlayer() {
+        initializeYoutubeIframeApi(this.YTPlayerRef.current || 'tt_player', {
+            videoId: this.props.playing || "",
+            events: {
+                'onReady': this.onPlayerReady(),
+                'onStateChange': this.onPlayerStateChange()
+            }
+        }).then( (youtubePlayerRef) => {
+            this.player = youtubePlayerRef;
+        });
+
+        this.setState({ open: this.props.playing, playing: this.props.playing }, initYTApi);
+    }
+
+    componentDidUpdate(props) {
         if (props.playing && this.player) {
-            this.player.loadVideoById(props.videoId)
+            this.player.loadVideoById(props.playing);
+            
             this.setState({ open: true });
         }
     }
 
-    initYTApi() {
-        const firstScriptTag = document.getElementsByTagName('script')[0];
-        const tag = document.createElement('script');
-        tag.src = IFRAME_API_URL;
-
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    getSnapshotBeforeUpdate(prevProps, prevState) {
+        return prevProps.playing;
     }
-
 
     onPlayerReady(event) {
         console.log('player ready');
@@ -79,19 +89,19 @@ class connectedPlayer extends Component {
                 const playerStatus = event.data;
                 switch (playerStatus) {
                     case PlayerStatuses.UNSTARTED:
-                        this.setState({ playing: false })
+                        this.setState({ playing: false });
                         break;
                     case PlayerStatuses.ENDED:
-                        this.onEnded()
+                        this.onEnded();
                         break;
                     case PlayerStatuses.PLAYING:
-                        this.setState({ playing: true })
+                        this.setState({ playing: true });
                         break;
                     case PlayerStatuses.PAUSED:
-                        this.setState({ playing: false })
+                        this.setState({ playing: false });
                         break;
                     case PlayerStatuses.VIDEO_CUED:
-                        this.setState({ playing: false })
+                        this.setState({ playing: false });
                         break;
                     default:
                         break;
@@ -99,26 +109,6 @@ class connectedPlayer extends Component {
                 console.log("player status", playerStatus);
             }
         }
-    }
-
-    initYoutubePlayer(selector, config) {
-        return new window.YT.Player(this.ytPlayerEl.current || 'tt-player', {
-            width: '100%',
-            height: '100%',
-            videoId: this.props.videoId || "",
-            playerVars: {
-                'autoplay': 1,
-                'controls': 1,
-                'iv_load_policy': 0,
-                'showinfo': 0,
-                'modestbranding': 1,
-                'rel': 0
-            },
-            events: {
-                'onReady': this.onPlayerReady(),
-                'onStateChange': this.onPlayerStateChange()
-            }
-        });
     }
 
     play() {
@@ -148,7 +138,7 @@ class connectedPlayer extends Component {
     render() {
         const playerClassnames = () => classNames("Player", {
             playing: this.props.playing,
-            open: this.state.open
+            open: this.props.playing
         });
         
         return (
@@ -156,7 +146,7 @@ class connectedPlayer extends Component {
                 <div className="Player-close" onClick={this.close()}>+</div>
                 <div className="Player-video-title">{this.getVideoProperty("name")}</div>
                 <div className="Player-wrapper">
-                    <div id="tt-player" ref={this.ytPlayerEl}></div>
+                    <div id="tt-player" ref={this.YTPlayerRef}></div>
                 </div>
                 <div className="Player-video-message">{this.getVideoProperty("message")}</div>
                 <div className="Player-video-description">{this.getVideoProperty("description")}</div>

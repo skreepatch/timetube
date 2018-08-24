@@ -9,6 +9,9 @@ const initialState =  {
     },
     search: {
         open: false,
+    },
+    player: {
+        open: false
     }
 };
 

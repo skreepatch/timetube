@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './Welcome.css';
 import moment from 'moment';
-import {fbSdk} from "../../providers/facebookProvider";
+import {fbSdk} from "../../providers/facebook/facebook.provider";
 
 const mapStateToProps = (state) => ({
     me: state.me,
