@@ -17,18 +17,8 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export const Friends = connect(mapStateToProps, mapDispatchToProps)(
-class Friends extends Component {
-
-    componentWillReceiveProps(props) {
-        if (props.me && props.me.id !== this.props.me.id) {
-            const edgeType = 'friendsReducers';
-            api.edge(props.me.id, edgeType)
-                .then((friends) => this.props.updateFriends(friends));
-        }
-
-    }
-
+@connect(mapStateToProps, mapDispatchToProps)
+export class Friends extends Component {
     render() {
         return (
             <div className="friends-component">
@@ -40,5 +30,5 @@ class Friends extends Component {
             </div>
         )
     }
-});
+}
 

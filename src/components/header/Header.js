@@ -11,8 +11,8 @@ const mapStateToProps = (state) => {
     }
 };
 
-export const Header = connect(mapStateToProps)(
-class Header extends Component {
+@connect(mapStateToProps)
+export class Header extends Component {
 
     render() {
         const me = () => {
@@ -31,4 +31,4 @@ class Header extends Component {
             </div>
         );
     }
-});
+}

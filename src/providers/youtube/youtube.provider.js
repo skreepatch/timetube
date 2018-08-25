@@ -5,7 +5,7 @@ const initYoutubePlayer = (selector, options) => {
     return new window.YT.Player(selector, config);
 };
 
-export const initYTApi = () => {
+export const loadTYApi = () => {
     const firstScriptTag = document.getElementsByTagName('script')[0];
     const tag = document.createElement('script');
     tag.src = IFRAME_API_URL;
@@ -32,6 +32,7 @@ export const defaultYoutubePlayerConfig = {
 };
 
 export const initializeYoutubeIframeApi = (selector, options) => {
+    loadTYApi();
     return new Promise((resolve) => {
         window.onYouTubeIframeAPIReady = () => {
             return resolve(initYoutubePlayer(selector, options));

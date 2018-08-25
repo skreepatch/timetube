@@ -19,8 +19,8 @@ const mapStateToProps = (state) => ({
     timetube: getSelected(state)
 });
 
-export const Toolbar = connect(mapStateToProps)(
-class Toolbar extends Component {
+@connect(mapStateToProps)
+export class Toolbar extends Component {
     discoverMore() {
         return () => {
             store.dispatch(fetchVideos(this.props.id, this.props.me.accessToken))
@@ -80,4 +80,4 @@ class Toolbar extends Component {
             <div className={classes.friends} alt="Toggle Friends" onClick={this.toggleFriends()}></div>
         </div>
     }
-});
+}

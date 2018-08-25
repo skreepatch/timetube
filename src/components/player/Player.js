@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { updatePlaying } from "../../store/player/player.actions";
 import classNames from 'classnames';
-import PlayerStatuses from './statuses';
+import { PLAYER_STATUSES } from '../../constants/statuses';
 import './Player.css';
 import {getSelected} from "../../store/timetubes/timetubes.selectors";
 import {getPlaying} from "../../store/player/player.selectors";
-import {initializeYoutubeIframeApi, initYTApi} from "../../providers/youtube/youtube.provider";
+import {initializeYoutubeIframeApi} from "../../providers/youtube/youtube.provider";
 
 const currentVideo = (state) => {
     const timetube = getSelected(state);
@@ -27,13 +27,13 @@ const mapDispatchToProps = (dispatch) => ({
     updatePlaying: (id) => dispatch(updatePlaying(id))
 });
 
-class connectedPlayer extends Component {
+@connect(mapStateToProps, mapDispatchToProps)
+export class Player extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.YTPlayerRef = React.createRef();
-        this.state = { open: false };
     }
 
     componentDidMount() {
@@ -50,28 +50,23 @@ class connectedPlayer extends Component {
         }).then( (youtubePlayerRef) => {
             this.player = youtubePlayerRef;
         });
-
-        this.setState({ open: this.props.playing, playing: this.props.playing }, initYTApi);
     }
 
-    componentDidUpdate(props) {
-        if (props.playing && this.player) {
-            this.player.loadVideoById(props.playing);
-
-            this.setState({ open: true });
+    componentDidUpdate(prevProps) {
+        if (this.props.playing !== prevProps.playing && this.player) {
+            this.player.loadVideoById(this.props.playing);
         }
     }
 
-    getSnapshotBeforeUpdate(prevProps, prevState) {
-        return prevProps.playing;
+    getSnapshotBeforeUpdate(props) {
+        return props.playing;
     }
 
     onPlayerReady(event) {
-        console.log('player ready');
+        // player ready
     }
 
     onEnded(event) {
-        this.setState({ playing: false });
         this.playNext();
     }
 
@@ -84,29 +79,24 @@ class connectedPlayer extends Component {
     }
 
     onPlayerStateChange(event) {
-        return () => {
+        return (event) => {
             if (event) {
                 const playerStatus = event.data;
                 switch (playerStatus) {
-                    case PlayerStatuses.UNSTARTED:
-                        this.setState({ playing: false });
+                    case PLAYER_STATUSES.UNSTARTED:
                         break;
-                    case PlayerStatuses.ENDED:
+                    case PLAYER_STATUSES.ENDED:
                         this.onEnded();
                         break;
-                    case PlayerStatuses.PLAYING:
-                        this.setState({ playing: true });
+                    case PLAYER_STATUSES.PLAYING:
                         break;
-                    case PlayerStatuses.PAUSED:
-                        this.setState({ playing: false });
+                    case PLAYER_STATUSES.PAUSED:
                         break;
-                    case PlayerStatuses.VIDEO_CUED:
-                        this.setState({ playing: false });
+                    case PLAYER_STATUSES.VIDEO_CUED:
                         break;
                     default:
                         break;
                 }
-                console.log("player status", playerStatus);
             }
         }
     }
@@ -143,10 +133,12 @@ class connectedPlayer extends Component {
         
         return (
             <div className={playerClassnames()}>
-                <div className="Player-close" onClick={this.close()}>+</div>
+                <div className="Player-close" onClick={this.close()}><i className="icon-cross"></i></div>
                 <div className="Player-video-title">{this.getVideoProperty("name")}</div>
                 <div className="Player-wrapper">
-                    <div id="tt-player" ref={this.YTPlayerRef}></div>
+                    <div className="Player-previous playlist-controls" onClick={this.props.previous}><i className="icon-previous2"></i></div>
+                    <div id="tt-player" className="Player-iframe" ref={this.YTPlayerRef}></div>
+                    <div className="Player-previous playlist-controls" onClick={this.props.next}><i className="icon-next2"></i></div>
                 </div>
                 <div className="Player-video-message">{this.getVideoProperty("message")}</div>
                 <div className="Player-video-description">{this.getVideoProperty("description")}</div>
@@ -154,5 +146,3 @@ class connectedPlayer extends Component {
         )
     }
 }
-
-export const Player = connect(mapStateToProps, mapDispatchToProps)(connectedPlayer);

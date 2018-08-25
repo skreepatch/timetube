@@ -1,4 +1,4 @@
-:root {
+.Clock-loader {
     --clock-radius: 10vw;
     --clock-border-width: 6px;
     --clock-border-color: var(--light);

@@ -18,8 +18,8 @@ const mapStateToProps = (state) => {
     }
 };
 
-export const Channel = connect(mapStateToProps)(
-class Channel extends Component {
+@connect(mapStateToProps)
+export class Channel extends Component {
     filterBySearch(videos, searchTerm) {
         return videos.filter((video) => {
             const searchString = (video.message + video.description + video.name).toLowerCase();
@@ -54,4 +54,4 @@ class Channel extends Component {
                     showLoader={this.props.timetube.fetching} />
             </div>
     }
-});
+}

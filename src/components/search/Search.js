@@ -11,7 +11,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         updateQuery: partialState => dispatch(updateQuery(partialState)),
     };
-}
+};
 
 const mapStateToProps = (state) => {
     return { 
@@ -19,9 +19,10 @@ const mapStateToProps = (state) => {
         ui: getUI(state),
         timetube: getSelected(state)
     }
-}
+};
 
-class ConnectedSearch extends Component {
+@connect(mapStateToProps, mapDispatchToProps)
+export class Search extends Component {
 
     constructor(props) {
         super(props);
@@ -105,5 +106,3 @@ class ConnectedSearch extends Component {
         )
     }
 }
-
-export const Search = connect(mapStateToProps, mapDispatchToProps)(ConnectedSearch);

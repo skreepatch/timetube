@@ -35,8 +35,8 @@ const mapDispatchToProps = (dispatch) => {
         updatePlaying: (videoId) => dispatch(updatePlaying(videoId))
     }
 };
-export const Timetube = connect(mapStateToProps, mapDispatchToProps)(
-class Timetube extends Component {
+@connect(mapStateToProps, mapDispatchToProps)
+export class Timetube extends Component {
     setId(id) {
         this.props.setId(id);
     }
@@ -78,23 +78,30 @@ class Timetube extends Component {
     previousVideo() {
         const ids = Object.keys(this.props.timetube.videos);
         const index = ids.indexOf(this.props.activeVideoId);
-        return ids[index - 1] || ids[ids.length - 1];
+        return index === 0 ? ids[ids.length - 1] : ids[index - 1];
     }
 
     playNext() {
-        this.props.updatePlaying(this.nextVideo());
+        return () => {
+            this.props.updatePlaying(this.nextVideo());
+        }
     }
 
     playPrevious() {
-        this.props.updatePlaying(this.previousVideo());
+        return () => {
+            this.props.updatePlaying(this.previousVideo());
+        }
     }
 
     render() {
+        const player = () => {
+            return this.props.id ? <Player videoId={this.props.activeVideoId} next={this.playNext()} previous={this.playPrevious()}/> : "";
+        };
         return <div className="Timetube">
-            <Player videoId={this.props.activeVideoId} next={this.playNext} previous={this.previousVideo}/>
+            { player() }
             <Search />
             <Channel />
             <Toolbar />
         </div>
     }
-});
+}

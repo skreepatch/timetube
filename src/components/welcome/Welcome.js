@@ -2,17 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './Welcome.css';
 import moment from 'moment';
-import {fbSdk} from "../../providers/facebook/facebook.provider";
+import { FBLogin } from "../../providers/facebook/facebook.provider";
 
 const mapStateToProps = (state) => ({
     me: state.me,
     timetube: state.timetubes[state.me.id]
 });
 
+@connect(mapStateToProps)
 export class Welcome extends Component {
     fbLogin() {
         return () => {
-            fbSdk.login();
+            FBLogin();
         }
     }
 
@@ -47,5 +48,3 @@ export class Welcome extends Component {
         );
     }
 }
-
-export const ConnectedWelcome = connect(mapStateToProps)(Welcome);

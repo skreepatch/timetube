@@ -1,18 +1,23 @@
 import {APP_ID} from "../../config";
-import {STATUSES} from "./login";
+
 import {store} from "../../store/index";
 import { updateMe, loggedInOut } from "../../store/me/me.actions";
+import {AUTH_STATUSES} from "../../constants/statuses";
 
 const statusChange = (response) => {
-    if (response.status === STATUSES.CONNECTED) {
-        window.FB.api(`${response.authResponse.userID}?fields=name,picture,permissions`, (defaultProfile) => {
-            const update = {...defaultProfile, ...response.authResponse};
-            store.dispatch(updateMe(update));
-            store.dispatch(loggedInOut(true));
-        });
+    if (response.status === AUTH_STATUSES.CONNECTED) {
+        fetchUser(response.authResponse);
     } else {
         store.dispatch(loggedInOut(false));
     }
+};
+
+export const fetchUser = (authResponse) => {
+    window.FB.api(`${authResponse.userID}?fields=name,picture,permissions`, (defaultProfile) => {
+        const update = {...defaultProfile, ...authResponse};
+        store.dispatch(updateMe(update));
+        store.dispatch(loggedInOut(true));
+    });
 };
 
 export const initializeFacebookSDK = (statusChangeCallback = statusChange) => {
@@ -41,4 +46,8 @@ export const initializeFacebookSDK = (statusChangeCallback = statusChange) => {
 
 export const fbSdk = () => {
     return window.FB;
+};
+
+export const FBLogin = () => {
+  return fbSdk().login;
 };
