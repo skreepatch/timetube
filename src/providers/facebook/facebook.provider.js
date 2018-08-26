@@ -1,8 +1,8 @@
-import {APP_ID} from "../../config";
-
 import {store} from "../../store/index";
 import { updateMe, loggedInOut } from "../../store/me/me.actions";
-import {AUTH_STATUSES} from "../../constants/statuses";
+import {AUTH_STATUSES} from "./facebook.constants";
+import {APP_ID} from "../../config/facebookAppId";
+import {updateUi} from "../../store/ui/ui.actions";
 
 const statusChange = (response) => {
     if (response.status === AUTH_STATUSES.CONNECTED) {
@@ -10,10 +10,11 @@ const statusChange = (response) => {
     } else {
         store.dispatch(loggedInOut(false));
     }
+    store.dispatch(updateUi({key: 'loading', value: false}));
 };
 
 export const fetchUser = (authResponse) => {
-    window.FB.api(`${authResponse.userID}?fields=name,picture,permissions`, (defaultProfile) => {
+    getFbSdk().api(`${authResponse.userID}?fields=name,picture,permissions`, (defaultProfile) => {
         const update = {...defaultProfile, ...authResponse};
         store.dispatch(updateMe(update));
         store.dispatch(loggedInOut(true));
@@ -22,15 +23,15 @@ export const fetchUser = (authResponse) => {
 
 export const initializeFacebookSDK = (statusChangeCallback = statusChange) => {
     window.fbAsyncInit = function () {
-        window.FB.init({
+        getFbSdk().init({
             appId: APP_ID,
             autoLogAppEvents: true,
             xfbml: true,
             version: 'v3.0'
         });
 
-        window.FB.Event.subscribe('auth.statusChange', statusChangeCallback);
-        window.FB.getLoginStatus(statusChangeCallback);
+        getFbSdk().Event.subscribe('auth.statusChange', statusChangeCallback);
+        getFbSdk().getLoginStatus(statusChangeCallback);
     };
 
     (function (d, s, id) {
@@ -44,12 +45,10 @@ export const initializeFacebookSDK = (statusChangeCallback = statusChange) => {
     }(document, 'script', 'facebook-jssdk'));
 };
 
-//TODO: you can use this function in this file as well, you can also rename to getFbSdk
-export const fbSdk = () => {
+export const getFbSdk = () => {
     return window.FB;
 };
 
-//TODO: lower camel case
-export const FBLogin = () => {
-  return fbSdk().login;
+export const fbLogin = () => {
+  return getFbSdk().login;
 };

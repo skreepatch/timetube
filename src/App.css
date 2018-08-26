@@ -28,43 +28,8 @@ body * {
   flex-direction: column;
   flex: 1 1 100%;
   max-width: 100%;
+    background: url("/assets/images/backgrounds/6e351e2f.png");
 } 
-
-.main.loading {
-    animation: loader 3s infinite;
-}
-
-@keyframes loader {
-    0% {
-        background-position: 0 0;
-    }
-    50% {
-        background-position: -5% -5%;
-    }
-    100% {
-        background-position: 0 0;
-    }
-}
-.Loader {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    z-index: -1;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0px;
-    background: rgba(0,0,0,0.78);
-    transition: opacity 0.2s ease-in-out;
-}
-.loading .Loader {
-    opacity: 1;
-    z-index: 100; 
-    color: var(--light);
-}
-
 
 .main-wrapper {
   display: flex;

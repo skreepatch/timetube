@@ -18,7 +18,11 @@ export class Friends extends Component {
             <div className="friends-component">
                 {
                     this.props.friends.data.map((friend) => (
-                        <UserLink user={friend} key={friend.id} />
+                        <UserLink
+                            id={friend.id}
+                            picture={friend.picture.data.url}
+                            name={friend.name}
+                            key={friend.id} />
                     ))
                 }
             </div>

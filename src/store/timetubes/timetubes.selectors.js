@@ -1,3 +1,5 @@
+import {getMe} from "../me/me.selectors";
+
 export const getTimetubes = (state) => {
     return state.timetubes;
 };
@@ -12,4 +14,8 @@ export const getSelectedTimetubePaging = (state) => {
 
 export const getSelectedTimetubeVideos = (state) => {
     return getSelected(state).videos;
+};
+
+export const getMyTimetube = (state) => {
+    return getTimetubes(state)[getMe(state).id];
 };

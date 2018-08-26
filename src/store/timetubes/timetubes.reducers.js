@@ -1,5 +1,5 @@
-import { RECEIVE_TIMETUBE, REQUEST_TIMETUBE } from "../../constants/action-types";
-import {updateFromLocalStorage} from "../../providers/localStorage.provider";
+import {updateFromLocalStorage} from "../../providers/localStorage/localStorage.provider";
+import {RECEIVE_TIMETUBE, REQUEST_TIMETUBE} from "./timetubes.actions";
 
 const initialItemState = {
     videos: {},
@@ -26,8 +26,8 @@ export const timetubes = (state = updateFromLocalStorage(), action) => {
                 acc[video.videoId] = video;
                 return acc;
             }, currentTimetube.videos);
-            const discoveredUntil = Object.keys(videos).length ? Object.values(videos).slice(-1)[0].created_time : currentTimetube.discoveredUntil;
             const drained = currentTimetube.drained || !paging;
+            const discoveredUntil = !drained && Object.keys(videos).length ? Object.values(videos).slice(-1)[0].created_time : currentTimetube.discoveredUntil;
 
             return {
                 ...state,

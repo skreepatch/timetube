@@ -37,27 +37,26 @@ const mapDispatchToProps = (dispatch) => {
 };
 @connect(mapStateToProps, mapDispatchToProps)
 export class Timetube extends Component {
-    setId(id) {
+    setId(id = this.getTimetubeId()) {
         this.props.setId(id);
     }
 
-    setLoading(value) {
-        this.props.updateUi({ key: 'getLoading', value });
+    checkLoginStatus() {
+        if (!this.props.me.isLoggedIn) {
+            this.props.history.push('/');
+        }
+    }
+
+    getTimetubeId() {
+        return this.props.match.params.timetubeId || this.props.id;
     }
 
     componentDidMount() {
-        //TODO: Please extract to a function to have better readability
-        if (!this.props.me.isLoggedIn) {
-            this.props.history.push('/');
-            return;
-        }
-        //TODO: Please extract to a function to have better readability
-        const id = this.props.match.params.timetubeId || this.props.id;
-        this.setId(id);
+        this.checkLoginStatus();
+        this.setId();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        //TODO: Please extract to a function to have better readability
         if (snapshot !== prevProps.id) {
             this.setId(snapshot);
             this.scrapPosts(snapshot);
@@ -72,20 +71,22 @@ export class Timetube extends Component {
         store.dispatch(fetchVideos(id, this.props.me.accessToken));
     }
 
-    get getVideoIds() {
+    getVideoIds() {
         return Object.keys(this.props.timetube.videos);
     }
 
-    get currentVideoIndex() {
-        return this.getVideoIds.indexOf(this.props.activeVideoId);
+    currentVideoIndex() {
+        return this.getVideoIds().indexOf(this.props.activeVideoId);
     }
 
     nextVideo() {
-        return this.getVideoIds[this.currentVideoIndex + 1] || this.getVideoIds[0];
+        return this.getVideoIds()[this.currentVideoIndex() + 1] || this.getVideoIds()[0];
     }
     
     previousVideo() {
-        return this.currentVideoIndex === 0 ? this.getVideoIds[this.getVideoIds.length - 1] : this.getVideoIds[this.currentVideoIndex - 1];
+        const currentIndex = this.currentVideoIndex();
+        const ids = this.getVideoIds();
+        return currentIndex === 0 ? ids[ids.length - 1] : ids[currentIndex - 1];
     }
 
     playNext() {

@@ -1,4 +1,4 @@
-import { UPDATE_FRIENDS } from "../../constants/action-types";
+export const UPDATE_FRIENDS = "UPDATE_FRIENDS";
 
 export const updateFriends = (edgeResponse) => ({
     type: UPDATE_FRIENDS,

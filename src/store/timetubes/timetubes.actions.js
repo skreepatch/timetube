@@ -1,7 +1,11 @@
-import {RECEIVE_TIMETUBE, REQUEST_TIMETUBE} from "../../constants/action-types";
 import {store} from "../index";
 import {GET} from "../../utils/get";
-import {api} from "../../providers/facebook/api";
+import {getNext, getYoutubesFromPosts} from "../../providers/facebook/api";
+import {getTimetubes} from "./timetubes.selectors";
+
+export const REQUEST_TIMETUBE = "REQUEST_TIMETUBE";
+
+export const RECEIVE_TIMETUBE = "RECEIVE_TIMETUBE";
 
 export const receiveTimetube = (partialTimetube) => ({
     type: RECEIVE_TIMETUBE,
@@ -14,24 +18,26 @@ export const requestTimetube = (id) => ({
 });
 
 
-/* Async action constructors */
+const recieiveTimetubeDispatcher = (update, id) => {
+    store.dispatch(receiveTimetube({ update, id }));
+};
+
+/* Async action creators */
 export const fetchVideos = (timetubeID, accessToken) => {
-    //TODO: I do not know if agree with you that you get from the store, but if you do so, please use the selectors
-    const timetube = store.getState().timetubes[timetubeID] || {};
+    //TODO: I do not know if agree with you that you get from the store
+    const state = store.getState();
+    const timetube = getTimetubes(state)[timetubeID] || {};
     const next = GET(timetube, 'paging.next');
     const isDrained = timetube.drained;
     return (dispatch) => {
         dispatch(requestTimetube(timetubeID));
 
-        //TODO: Think about extracting it to a const outside of the function to have better readability
-        const updateHandler = (update) => {
-            dispatch(receiveTimetube({ update, id: timetubeID }));
-        };
-
         if (next && accessToken && !isDrained) {
-            return api.next(next, accessToken).then(updateHandler);
+            return getNext(next, accessToken)
+                .then((update) => recieiveTimetubeDispatcher(update, timetubeID));
         }
 
-        return api.videos(timetubeID).then(updateHandler);
+        return getYoutubesFromPosts(timetubeID)
+            .then((update) => recieiveTimetubeDispatcher(update, timetubeID));
     }
-}
+};

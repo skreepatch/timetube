@@ -1,4 +1,4 @@
-import {getSelected, getTimetubes} from "./timetubes.selectors";
+import {getMyTimetube, getSelected, getTimetubes} from "./timetubes.selectors";
 
 describe('timetube selectors', () => {
     describe('getTimetubes selector', () => {
@@ -11,7 +11,7 @@ describe('timetube selectors', () => {
     describe('getSelected', () => {
         it('should return the selected timetube by key from timetubes store section', () => {
             const selected = 'Yo';
-            const selectedId = 'myId';
+            const selectedId = 'theId';
             const state = {
                 id: selectedId,
                 timetubes: {
@@ -21,6 +21,24 @@ describe('timetube selectors', () => {
             expect(getSelected(state)).toBe(selected);
         });
     });
+
+    describe('getMyTimetube', () => {
+        it('should return the timetube of the currently logged in use', () => {
+            const selected = 'Yo';
+            const me = {
+                id: 'me'
+            };
+            const state = {
+                id: selectedId,
+                me: me,
+                timetubes: {
+                    [me.id]: selected
+                }
+            };
+            expect(getMyTimetube(state)).toBe(selected);
+        });
+    });
+
 
     describe('getSelectedTimetubePaging', () => {
         it('should return the paging object of the selected timetube by key from timetubes store section', () => {

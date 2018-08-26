@@ -1,4 +1,4 @@
-import {SET_ID} from "../../constants/action-types";
+export const SET_ID = "SET_ID";
 
 export const setId = (id) => ({
     type: SET_ID,

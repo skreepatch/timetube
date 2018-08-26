@@ -7,7 +7,8 @@ import { Gallery } from '../gallery/Gallery';
 import './Channel.css';
 import {getMe} from "../../store/me/me.selectors";
 import { arrayFromObject } from "../../utils/array-from-object";
-import {saveToLocalStorage} from "../../providers/localStorage.provider";
+import {saveToLocalStorage} from "../../providers/localStorage/localStorage.provider";
+import {sortByKey} from "../../utils/video";
 
 const mapStateToProps = (state) => {
     return {
@@ -46,7 +47,7 @@ export class Channel extends Component {
 
         this.saveToLocalStorage();
 
-        return videos;
+        return sortByKey(videos, 'created_time');
     }
 
     render() {

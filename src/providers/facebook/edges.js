@@ -1,5 +1,5 @@
-import { getTime } from '../../utils/date';
-
+import { getTimestampFromDate } from '../../utils/date';
+import { getFbSdk } from './facebook.provider';
 import {
     POST_FIELDS,
     FRIENDS_FIELDS,
@@ -13,7 +13,7 @@ export const edges = {
           .with(attachment)
           .limit(250){${POST_FIELDS.join(',')}}
           &include_hidden=true
-          &since=${since || '954867754'}&until=${until || getTime()}`;
+          &since=${since || '954867754'}&until=${until || getTimestampFromDate()}`;
     },
     friends: (id) => {
         return `${id}?fields=friends
@@ -27,7 +27,7 @@ export const edges = {
         return `${id}?fields=reactions
           .limit(250){${REACTIONS_FIELDS.join(',')}}`;
     }
-}
+};
 
 export const constructQuery = (id, edge, options = {}) => {
     return edges[edge](id, options);
@@ -38,9 +38,7 @@ export const fetchEdge = (id, edge, options) => {
     const graphQuery = constructQuery(id, edge, options);
 
     return new Promise((resolve, reject) => {
-
-        //TODO: you can add the getFbApi
-        window.FB.api(graphQuery, (response) => {
+        getFbSdk().api(graphQuery, (response) => {
             if (response.error) {
                 return reject(response.error);
             }

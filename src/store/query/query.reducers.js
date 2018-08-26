@@ -1,4 +1,4 @@
-import { UPDATE_QUERY } from "../../constants/action-types";
+import {UPDATE_QUERY} from "./query.actions";
 
 const initialState = {
     searchTerm: "",

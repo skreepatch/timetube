@@ -1,6 +1,12 @@
-export const getTime = (date) => {
-    const milliseconds = date ? new Date(date).getTime() : Date.now();
+export const milliSecondsDivider = 1000;
 
-    //TODO: think about extracting 1000 to a const to have better readability
-    return parseInt(milliseconds / 1000, 10);
-}
+export const getSecondsFromMilliseconds = (milliseconds) => {
+    return milliseconds / milliSecondsDivider;
+};
+
+export const getTimestampFromDate = (date) => {
+    return parseInt(
+        getSecondsFromMilliseconds(
+            date ? new Date(date).getTime() : Date.now()
+        ), 10);
+};

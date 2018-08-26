@@ -1,8 +1,8 @@
-import { UPDATE_UI } from "../../constants/action-types";
+import {UPDATE_UI} from "./ui.actions";
 
 const initialState =  {
     error: "",
-    loading: false,
+    loading: true,
     friends: {
         open: false,
         fetching: false

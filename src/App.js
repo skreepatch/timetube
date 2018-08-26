@@ -1,31 +1,17 @@
 import React from 'react';
 import {BrowserRouter as Router} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import classNames from 'class-names';
 import {store} from "./store/index";
 import {Header} from './components/header/Header';
-import {backgroundImage} from './utils/random-backgrounds/random-backgrounds';
 import './App.css';
 import {initializeFacebookSDK} from "./providers/facebook/facebook.provider";
 import {routes} from "./routes";
+import {MainLoader} from "./components/mainLoader/MainLoader";
+import {updateUi} from "./store/ui/ui.actions";
 
 export class App extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {checking: true, loading: false};
-//TODO: We could turn the div inside to be connected and not use the store directly
-        store.subscribe(() => {
-            const state = store.getState();
-            this.setLoading(state.ui.loading);
-            if (state.me) {
-                this.setState({checking: false});
-            }
-        });
-    }
-
     setLoading(loading) {
-        this.setState({loading});
+        store.dispatch(updateUi({key: 'loading', value: true}));
     }
 
     componentDidMount() {
@@ -34,15 +20,11 @@ export class App extends React.Component {
     }
 
     render() {
-        const style = {backgroundImage: `url(${backgroundImage})`};
-        const mainClass = classNames('main', {
-            loading: this.state.loading
-        });
         return <Provider store={store}>
             <Router>
-                <div className={mainClass} style={style}>
-                    <div className="Loader"><span className="spinner">Loading</span></div>
-                    <Header checking={this.state.checking}/>
+                <div className="main">
+                    <MainLoader />
+                    <Header />
                     {routes()}
                 </div>
             </Router>

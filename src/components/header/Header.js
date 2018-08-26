@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Me from './me/Me';
+import { Me } from './me/Me';
 import Logo from './logo/Logo';
 import './Header.css';
 import {getLoggedIn, getMe} from "../../store/me/me.selectors";

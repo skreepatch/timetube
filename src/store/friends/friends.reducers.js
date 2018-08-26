@@ -1,7 +1,8 @@
-import { UPDATE_FRIENDS } from "../../constants/action-types";
+import { UPDATE_FRIENDS } from "./friends.actions";
 
 //TODO: the data key is not helping describing the data structure, maybe friends?
 const initialState = { data: [], paging: {} };
+
 export const friends = (state = initialState, action) => {
     switch (action.type) {
         case UPDATE_FRIENDS:
@@ -15,5 +16,4 @@ export const friends = (state = initialState, action) => {
         default:
             return state;
     }
-
 };

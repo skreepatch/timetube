@@ -53,7 +53,7 @@ export class Hashtags extends Component {
             active: this.props.searchTerm === tag
         });
 
-        return <div className="tags-component">
+        return <div className="Hashtags">
             {
                 Object.keys(this.tagsCollection).map((tag) => {
                     return <div className={tagClassNames(tag)} key={tag} onClick={this.searchTag()} data-tag={tag}>{tag}

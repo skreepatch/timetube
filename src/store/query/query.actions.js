@@ -1,4 +1,4 @@
-import {UPDATE_QUERY} from "../../constants/action-types";
+export const UPDATE_QUERY = "UPDATE_QUERY";
 
 export const updateQuery = (update) => ({
     type: UPDATE_QUERY,

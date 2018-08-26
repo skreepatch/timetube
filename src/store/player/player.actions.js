@@ -1,4 +1,6 @@
-import {UPDATE_PLAYING, UPDATE_VOLUME} from "../../constants/action-types";
+export const UPDATE_PLAYING = "UPDATE_PLAYING";
+
+export const UPDATE_VOLUME = "UPDATE_VOLUME";
 
 export const updatePlaying = (videoId) => ({
     type: UPDATE_PLAYING,

@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { updatePlaying } from "../../store/player/player.actions";
 import classNames from 'classnames';
-import { PLAYER_STATUSES } from '../../constants/statuses';
 import './Player.css';
 import {getSelected} from "../../store/timetubes/timetubes.selectors";
 import {getPlaying} from "../../store/player/player.selectors";
-import {initializeYoutubeIframeApi} from "../../providers/youtube/youtube.provider";
+import {initializeYoutubeIframeApi, PLAYER_STATUSES} from "../../providers/youtube/youtube.provider";
 
 const currentVideo = (state) => {
     const timetube = getSelected(state);

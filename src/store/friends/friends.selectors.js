@@ -1,4 +1,1 @@
-//TODO: can be one liner
-export const friends = (state) => {
-    return state.friends;
-};
+export const friends = (state) => state.friends;
