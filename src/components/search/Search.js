@@ -54,7 +54,7 @@ export class Search extends Component {
     isDisabled() {
         return this.state.searchTerm === this.props.query.searchTerm && this.state.hashtags === this.props.query.hashtags;
     }
-
+//TODO: to much logic inside a component
     hashTags() {
         const tagClassNames = (tag) => classNames('hashtag', {
             active: this.props.query.searchTerm === tag

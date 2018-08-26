@@ -4,6 +4,7 @@ import './Welcome.css';
 import moment from 'moment';
 import { FBLogin } from "../../providers/facebook/facebook.provider";
 
+//TODO: please use selectors
 const mapStateToProps = (state) => ({
     me: state.me,
     timetube: state.timetubes[state.me.id]
@@ -11,6 +12,7 @@ const mapStateToProps = (state) => ({
 
 @connect(mapStateToProps)
 export class Welcome extends Component {
+    //TODO: you can just use the function, it's the same thing
     fbLogin() {
         return () => {
             FBLogin();

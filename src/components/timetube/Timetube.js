@@ -46,15 +46,18 @@ export class Timetube extends Component {
     }
 
     componentDidMount() {
+        //TODO: Please extract to a function to have better readability
         if (!this.props.me.isLoggedIn) {
             this.props.history.push('/');
             return;
         }
+        //TODO: Please extract to a function to have better readability
         const id = this.props.match.params.timetubeId || this.props.id;
         this.setId(id);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+        //TODO: Please extract to a function to have better readability
         if (snapshot !== prevProps.id) {
             this.setId(snapshot);
             this.scrapPosts(snapshot);
@@ -70,12 +73,14 @@ export class Timetube extends Component {
     }
 
     nextVideo() {
+        //TODO: Please extract to a function to have better readability
         const ids = Object.keys(this.props.timetube.videos);
         const index = ids.indexOf(this.props.activeVideoId);
         return ids[index + 1] || ids[0];
     }
     
     previousVideo() {
+        //TODO: Please extract to a function to have better readability
         const ids = Object.keys(this.props.timetube.videos);
         const index = ids.indexOf(this.props.activeVideoId);
         return index === 0 ? ids[ids.length - 1] : ids[index - 1];

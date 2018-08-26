@@ -17,16 +17,17 @@ const mapStateToProps = (state) => {
         query: getQuery(state)
     }
 };
-
+//TODO: fancy, we need to discus about decorators. They sometimes come at a cost of not knowing what is happening and harder build
 @connect(mapStateToProps)
 export class Channel extends Component {
     filterBySearch(videos, searchTerm) {
         return videos.filter((video) => {
+            //TODO: think about extracting this to a function, to have better readability
             const searchString = (video.message + video.description + video.name).toLowerCase();
             return searchString ? searchString.indexOf(searchTerm) > -1 : false;
         })
     }
-
+//TODO: You have a lot of contact points that you save things to local storage. We need to think if we want a middleware to do this. Since it will decouple the logic from the view
     saveToLocalStorage() {
         saveToLocalStorage(this.props.id, this.props.timetube);
     }

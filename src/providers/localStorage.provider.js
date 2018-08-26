@@ -1,8 +1,9 @@
 const localStorage = window.localStorage;
 const keyPrefix = 'tt_';
 
-
+//TODO: please keep the structure aligned when you have one file in the provider either you put all providers in a folder or you don't. Here youtube is in a folder but local storage isn't
 export const updateFromLocalStorage = () => {
+    //TODO: if you can, please use a get function since it easier to mock and it will be consistent with the rest of the providers
     if (!localStorage) {
         return {};
     }

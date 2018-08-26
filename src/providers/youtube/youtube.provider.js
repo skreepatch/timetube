@@ -4,7 +4,7 @@ const initYoutubePlayer = (selector, options) => {
     const config = {...defaultYoutubePlayerConfig, ...options};
     return new window.YT.Player(selector, config);
 };
-
+//TODO: small typo. You can also use the full name we have the space :). Is it important to find the first script and append youtube script to it?
 export const loadTYApi = () => {
     const firstScriptTag = document.getElementsByTagName('script')[0];
     const tag = document.createElement('script');
@@ -33,7 +33,9 @@ export const defaultYoutubePlayerConfig = {
 
 export const initializeYoutubeIframeApi = (selector, options) => {
     loadTYApi();
+    //TODO: you can use Promise.reslove() for a cleaner look
     return new Promise((resolve) => {
+        //TODO: can be one liner
         window.onYouTubeIframeAPIReady = () => {
             return resolve(initYoutubePlayer(selector, options));
         };

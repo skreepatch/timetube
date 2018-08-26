@@ -1,5 +1,6 @@
 import { API_URL, API_KEY } from '../config';
 
+//TODO: Do you use this functions?
 export const QueryAdapeter = ( query ) => {
     const params = {...query, apikey: API_KEY};
     

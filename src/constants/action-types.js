@@ -1,3 +1,6 @@
+//TODO: you have some consts that you do not user, please remove
+//TODO: This consts are for actions. We do not need to have a centralized place for them. you can expose them in the actions them self. this way you do not need to edit this file every time you want to add an action.
+//TODO: in an action const we can write a human readable explanation what the action is, e.g. for update me '[me] update user info'. As it will help us debug and understand a user journey
 export const UPDATE_ME = "UPDATE_ME";
 export const UPDATE_FRIENDS = "UPDATE_FRIENDS";
 export const ADD_TIMETUBE = "ADD_TIMETUBE";
