@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './User-link.css';
 
-
+//TODO: please use more props that object since it will be more declarative
 class UserLink extends Component {
     render() {
         return <Link to={`/channel/${this.props.user.id}`} className="user-link">

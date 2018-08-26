@@ -44,10 +44,12 @@ export const initializeFacebookSDK = (statusChangeCallback = statusChange) => {
     }(document, 'script', 'facebook-jssdk'));
 };
 
+//TODO: you can use this function in this file as well, you can also rename to getFbSdk
 export const fbSdk = () => {
     return window.FB;
 };
 
+//TODO: lower camel case
 export const FBLogin = () => {
   return fbSdk().login;
 };

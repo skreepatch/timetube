@@ -14,7 +14,7 @@ export class App extends React.Component {
         super(props);
 
         this.state = {checking: true, loading: false};
-
+//TODO: We could turn the div inside to be connected and not use the store directly
         store.subscribe(() => {
             const state = store.getState();
             this.setLoading(state.ui.loading);

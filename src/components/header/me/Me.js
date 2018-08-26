@@ -9,6 +9,7 @@ const myTimetube = (state) => {
 
 const mapStateToProps = (state) => {
     return {
+        //TODO: please use selectors
         me: state.me,
         friends: state.friends,
         myTimetube: myTimetube(state)

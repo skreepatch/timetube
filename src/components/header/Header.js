@@ -15,6 +15,7 @@ const mapStateToProps = (state) => {
 export class Header extends Component {
 
     render() {
+        //TODO: Please extract to a function
         const me = () => {
             if (this.props.checking) {
                 return <div className="Checking">checking...</div>

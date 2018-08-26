@@ -16,12 +16,14 @@ export const requestTimetube = (id) => ({
 
 /* Async action constructors */
 export const fetchVideos = (timetubeID, accessToken) => {
+    //TODO: I do not know if agree with you that you get from the store, but if you do so, please use the selectors
     const timetube = store.getState().timetubes[timetubeID] || {};
     const next = GET(timetube, 'paging.next');
     const isDrained = timetube.drained;
     return (dispatch) => {
         dispatch(requestTimetube(timetubeID));
 
+        //TODO: Think about extracting it to a const outside of the function to have better readability
         const updateHandler = (update) => {
             dispatch(receiveTimetube({ update, id: timetubeID }));
         };

@@ -36,8 +36,10 @@ export const constructQuery = (id, edge, options = {}) => {
 
 export const fetchEdge = (id, edge, options) => {
     const graphQuery = constructQuery(id, edge, options);
-    
+
     return new Promise((resolve, reject) => {
+
+        //TODO: you can add the getFbApi
         window.FB.api(graphQuery, (response) => {
             if (response.error) {
                 return reject(response.error);

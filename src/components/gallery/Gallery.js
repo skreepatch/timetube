@@ -5,6 +5,7 @@ import './Gallery.css';
 
 export class Gallery extends Component {
     render() {
+        //TODO: do you need to create every render a new array?
         const videos = Array.from(this.props.videos.values());
         return <div className="Gallery-wrapper">
             <div className="Gallery">
