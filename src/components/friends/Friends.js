@@ -1,26 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-//TODO: please remove unused imports
-import { api } from '../../providers/facebook/api';
-import { updateFriends } from "../../store/friends/friends.actions";
 import UserLink from '../userLink/User-link';
+import {getFriends} from "../../store/ui/ui.selectors";
+import {getMe} from "../../store/me/me.selectors";
 
 const mapStateToProps = (state) => {
     return {
-        //TODO: user a selector, and think about having a specific selector for state.friends.data since you only use this property and it means that you expose the internal structure though you do not need to.
-        friends: state.friends,
-        me: state.me
+        friends: getFriends,
+        me: getMe
     }
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        //TODO: Do you use this props?
-        updateFriends: (friends) => dispatch(updateFriends(friends))
-    }
-};
-
-@connect(mapStateToProps, mapDispatchToProps)
+@connect(mapStateToProps)
 export class Friends extends Component {
     render() {
         return (

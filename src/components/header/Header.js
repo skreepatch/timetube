@@ -4,31 +4,31 @@ import { connect } from 'react-redux';
 import Me from './me/Me';
 import Logo from './logo/Logo';
 import './Header.css';
+import {getLoggedIn, getMe} from "../../store/me/me.selectors";
 const mapStateToProps = (state) => {
     return {
-        isLoggedIn: state.isLoggedIn,
-        me: state.me
+        isLoggedIn: getLoggedIn(state),
+        me: getMe(state)
     }
 };
 
 @connect(mapStateToProps)
 export class Header extends Component {
+    me() {
+        if (this.props.checking) {
+            return <div className="Checking">checking...</div>
+        } else if (this.props.me) {
+            return <Me />
+        } else {
+            return <Link to="/login">Login with Facebook</Link>
+        }
+    }
 
     render() {
-        //TODO: Please extract to a function
-        const me = () => {
-            if (this.props.checking) {
-                return <div className="Checking">checking...</div>
-            } else if (this.props.me) {
-                return <Me />
-            } else {
-                return <Link to="/login">Login with Facebook</Link>
-            }
-        };
         return (
             <div className="header-component">
                 <Logo />
-                {me()}
+                {this.me()}
             </div>
         );
     }

@@ -6,6 +6,7 @@ import './Search.css';
 import {getSelected} from "../../store/timetubes/timetubes.selectors";
 import {getUI} from "../../store/ui/ui.selectors";
 import {getQuery} from "../../store/query/query.selectors";
+import {Hashtags} from "../hashtags/Hashtags";
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -37,52 +38,9 @@ export class Search extends Component {
         this.searchInput.current.focus();
     }
 
-    handleChange(event) {
+    handleChange() {
         return (event) => {
             this.props.updateQuery({ [event.target.id]: event.target.value.toLowerCase() });
-        }
-    }
-
-    searchTag(event) {
-        return (event) => {
-            const tag = event.currentTarget.dataset.tag &&
-            event.currentTarget.dataset.tag !== this.props.query.searchTerm ? event.currentTarget.dataset.tag : "";
-            this.props.updateQuery({ searchTerm: tag });
-        }
-    }
-
-    isDisabled() {
-        return this.state.searchTerm === this.props.query.searchTerm && this.state.hashtags === this.props.query.hashtags;
-    }
-//TODO: to much logic inside a component
-    hashTags() {
-        const tagClassNames = (tag) => classNames('hashtag', {
-            active: this.props.query.searchTerm === tag
-        });
-        if (this.props.timetube && this.props.timetube.videos) {
-            const hashtags = Object.values(this.props.timetube.videos).reduce((tags, video) => {
-                const searchIn = video.message + video.description + video.name;
-                const videoTags = searchIn.match(/(?:^|\s)(?:#)\w+/gim);
-                if (videoTags) {
-                    videoTags.forEach((tag) => {
-                        const key = tag.toLowerCase().trim();
-                        if (tags[key]) {
-                            tags[key]++;
-                        } else {
-                            tags[key] = 1;
-                        }
-                    });
-                }
-
-                return tags;
-            }, {});
-            const tags = Object.keys(hashtags) || [];
-
-            return (
-                tags.map((tag) => {
-                    return <div className={tagClassNames(tag)} key={tag} onClick={this.searchTag()} data-tag={tag}>{tag} <span className="tagCount">{hashtags[tag]}</span></div>;
-                })
-            );
         }
     }
 
@@ -99,9 +57,7 @@ export class Search extends Component {
                         placeholder="Search for something"
                         ref={this.searchInput} />
                 </form>
-                <div className="tags-component">
-                    {this.hashTags()}
-                </div>
+                <Hashtags />
             </div>
         )
     }

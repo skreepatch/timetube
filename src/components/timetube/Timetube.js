@@ -72,18 +72,20 @@ export class Timetube extends Component {
         store.dispatch(fetchVideos(id, this.props.me.accessToken));
     }
 
+    get getVideoIds() {
+        return Object.keys(this.props.timetube.videos);
+    }
+
+    get currentVideoIndex() {
+        return this.getVideoIds.indexOf(this.props.activeVideoId);
+    }
+
     nextVideo() {
-        //TODO: Please extract to a function to have better readability
-        const ids = Object.keys(this.props.timetube.videos);
-        const index = ids.indexOf(this.props.activeVideoId);
-        return ids[index + 1] || ids[0];
+        return this.getVideoIds[this.currentVideoIndex + 1] || this.getVideoIds[0];
     }
     
     previousVideo() {
-        //TODO: Please extract to a function to have better readability
-        const ids = Object.keys(this.props.timetube.videos);
-        const index = ids.indexOf(this.props.activeVideoId);
-        return index === 0 ? ids[ids.length - 1] : ids[index - 1];
+        return this.currentVideoIndex === 0 ? this.getVideoIds[this.getVideoIds.length - 1] : this.getVideoIds[this.currentVideoIndex - 1];
     }
 
     playNext() {

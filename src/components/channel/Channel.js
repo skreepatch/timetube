@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getId } from "../../store/id/id.selectors";
 import { getSelected } from "../../store/timetubes/timetubes.selectors";
-import { getQuery } from "../../store/query/query.selectors";
+import { getSearchterm } from "../../store/query/query.selectors";
 import { Gallery } from '../gallery/Gallery';
 import './Channel.css';
 import {getMe} from "../../store/me/me.selectors";
@@ -14,20 +14,22 @@ const mapStateToProps = (state) => {
         id: getId(state),
         me: getMe(state),
         timetube: getSelected(state) || {},
-        query: getQuery(state)
+        searchTerm: getSearchterm(state)
     }
 };
 //TODO: fancy, we need to discus about decorators. They sometimes come at a cost of not knowing what is happening and harder build
 @connect(mapStateToProps)
 export class Channel extends Component {
-    filterBySearch(videos, searchTerm) {
-        return videos.filter((video) => {
-            //TODO: think about extracting this to a function, to have better readability
-            const searchString = (video.message + video.description + video.name).toLowerCase();
-            return searchString ? searchString.indexOf(searchTerm) > -1 : false;
-        })
+    filterBySearch(videos) {
+        return videos.filter(this.filterVideo.bind(this));
     }
-//TODO: You have a lot of contact points that you save things to local storage. We need to think if we want a middleware to do this. Since it will decouple the logic from the view
+
+    filterVideo(video) {
+        const searchString = (video.message + video.description + video.name).toLowerCase();
+        return searchString ? searchString.indexOf(this.props.searchTerm) > -1 : false;
+    }
+
+    //TODO: You have a lot of contact points that you save things to local storage. We need to think if we want a middleware to do this. Since it will decouple the logic from the view
     saveToLocalStorage() {
         saveToLocalStorage(this.props.id, this.props.timetube);
     }
@@ -37,8 +39,7 @@ export class Channel extends Component {
             return [];
         }
         const videosCollection = arrayFromObject(this.props.timetube.videos, "values");
-        const searchTerm = this.props.query.searchTerm;
-        const videos = searchTerm ? this.filterBySearch(videosCollection, searchTerm) : videosCollection;
+        const videos = this.props.searchTerm ? this.filterBySearch(videosCollection) : videosCollection;
         if (!videos || videos.length === 0) {
             return [];
         }
@@ -50,9 +51,9 @@ export class Channel extends Component {
 
     render() {
         return <div className="Channel">
-                <Gallery
-                    videos={this.videosCollection()}
-                    showLoader={this.props.timetube.fetching} />
-            </div>
+            <Gallery
+                videos={this.videosCollection()}
+                showLoader={this.props.timetube.fetching} />
+        </div>
     }
 }

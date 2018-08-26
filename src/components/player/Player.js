@@ -78,8 +78,7 @@ export class Player extends Component {
         this.props.previous();
     }
 
-    //TODO: I do not understand why you getting the event variable
-    onPlayerStateChange(event) {
+    onPlayerStateChange() {
         return (event) => {
             if (event) {
                 const playerStatus = event.data;
