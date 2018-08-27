@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-class Logo extends Component {
+export class Logo extends Component {
     render() {
         return (
             <Link to="/">
@@ -10,6 +10,4 @@ class Logo extends Component {
             </Link>
         )
     }
-};
-
-export default Logo;
+}

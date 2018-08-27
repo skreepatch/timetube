@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './User-link.css';
 
-class UserLink extends Component {
+export class UserLink extends Component {
     render() {
-        return <Link to={`/channel/${this.props.id}`} className="user-link">
+        return <Link to={`/channel/${this.props.id}`} className="User-link">
             <div className="picture">
                 <img src={this.props.pictureUrl} alt="" />
             </div>
@@ -12,5 +12,3 @@ class UserLink extends Component {
         </Link>
     }
 }
-
-export default UserLink;

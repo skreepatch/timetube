@@ -1,4 +1,4 @@
-a.user-link {
+a.User-link {
     display: flex;
     flex: 0 0 auto;
     justify-content: center;
@@ -18,7 +18,7 @@ a:active {
     color: #a3a3a3;
 }
 
-.user-link .picture {
+.User-link .picture {
     border-radius: 50%;
     background-size: cover;
     width: 50px;
@@ -27,7 +27,7 @@ a:active {
     overflow: hidden;
 }
 
-.user-link .username {
+.User-link .username {
     padding: var(--grid-gap);
     color: white;
     text-shadow: 0 0 2px var(--dark);

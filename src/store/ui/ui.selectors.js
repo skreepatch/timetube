@@ -38,3 +38,7 @@ export const getPlayer = (state) => {
 export const getPlayerOpen = (state) => {
     return getPlayer(state).open;
 };
+
+export const getPlayerReady = (state) => {
+    return getPlayer(state).ready;
+};

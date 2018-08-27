@@ -11,6 +11,7 @@ const initialState =  {
         open: false,
     },
     player: {
+        ready: false,
         open: false
     }
 };

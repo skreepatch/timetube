@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import UserLink from '../../userLink/User-link';
+import { UserLink } from '../../userLink/User-link';
 import './Me.css';
 import {getMe} from "../../../store/me/me.selectors";
 import {getFriends} from "../../../store/ui/ui.selectors";

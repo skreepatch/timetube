@@ -1,5 +1,4 @@
-import {RECEIVE_TIMETUBE, REQUEST_TIMETUBE} from "../../constants/action-types";
-import {receiveTimetube, requestTimetube} from "./timetubes.actions";
+import {RECEIVE_TIMETUBE, receiveTimetube, REQUEST_TIMETUBE, requestTimetube} from "./timetubes.actions";
 
 describe('Timetubes action creators', () => {
    describe('receiveTimetube', () => {

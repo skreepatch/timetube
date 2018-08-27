@@ -8,12 +8,12 @@ import { id } from './id/id.reducers';
 import { player } from './player/player.reducers';
 
 export const rootReducer = combineReducers({
-    //TODO: IMO user is much clearer than me
-    me,
-    friends,
-    id,
-    timetubes,
-    query,
-    player,
-    ui
+	//TODO: IMO user is much clearer than me
+	me,
+	friends,
+	id,
+	timetubes,
+	query,
+	player,
+	ui
 });

@@ -4,10 +4,10 @@ import {Provider} from 'react-redux';
 import {store} from "./store/index";
 import {Header} from './components/header/Header';
 import './App.css';
-import {initializeFacebookSDK} from "./providers/facebook/facebook.provider";
 import {routes} from "./routes";
 import {MainLoader} from "./components/mainLoader/MainLoader";
 import {updateUi} from "./store/ui/ui.actions";
+import {initThirdPartyProviders} from "./providers/providers";
 
 export class App extends React.Component {
     setLoading(loading) {
@@ -16,7 +16,17 @@ export class App extends React.Component {
 
     componentDidMount() {
         this.setLoading(true);
-        initializeFacebookSDK();
+        this.initProviders();
+    }
+
+    /**
+     * Third party providers
+     */
+    initProviders() {
+        initThirdPartyProviders()
+            .then( () => {
+                console.log('providers ready');
+            });
     }
 
     render() {

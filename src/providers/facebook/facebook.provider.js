@@ -10,45 +10,53 @@ const statusChange = (response) => {
     } else {
         store.dispatch(loggedInOut(false));
     }
-    store.dispatch(updateUi({key: 'loading', value: false}));
+    store.dispatch(
+        updateUi({
+            key: 'loading',
+            value: false
+        })
+    );
 };
 
 export const fetchUser = (authResponse) => {
-    getFbSdk().api(`${authResponse.userID}?fields=name,picture,permissions`, (defaultProfile) => {
+    getFbApi().api(`${authResponse.userID}?fields=name,picture,permissions`, (defaultProfile) => {
         const update = {...defaultProfile, ...authResponse};
         store.dispatch(updateMe(update));
         store.dispatch(loggedInOut(true));
     });
 };
 
-export const initializeFacebookSDK = (statusChangeCallback = statusChange) => {
-    window.fbAsyncInit = function () {
-        getFbSdk().init({
-            appId: APP_ID,
-            autoLogAppEvents: true,
-            xfbml: true,
-            version: 'v3.0'
-        });
+export const initializeFacebookApi = (statusChangeCallback = statusChange) => {
+    return new Promise((resolve) => {
+        window.fbAsyncInit = function () {
+            getFbApi().init({
+                appId: APP_ID,
+                autoLogAppEvents: true,
+                xfbml: true,
+                version: 'v3.0'
+            });
 
-        getFbSdk().Event.subscribe('auth.statusChange', statusChangeCallback);
-        getFbSdk().getLoginStatus(statusChangeCallback);
-    };
+            getFbApi().Event.subscribe('auth.statusChange', statusChangeCallback);
+            getFbApi().getLoginStatus(statusChangeCallback);
+            resolve(getFbApi());
+        };
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            if (fjs) {
+                fjs.parentNode.insertBefore(js, fjs);
+            }
+        }(document, 'script', 'facebook-jssdk'));
+    });
 
-    (function (d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) { return; }
-        js = d.createElement(s); js.id = id;
-        js.src = "https://connect.facebook.net/en_US/sdk.js";
-        if (fjs) {
-            fjs.parentNode.insertBefore(js, fjs);
-        }
-    }(document, 'script', 'facebook-jssdk'));
 };
 
-export const getFbSdk = () => {
+export const getFbApi = () => {
     return window.FB;
 };
 
 export const fbLogin = () => {
-  return getFbSdk().login;
+  return getFbApi().login;
 };

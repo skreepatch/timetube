@@ -1,5 +1,5 @@
 import { getTimestampFromDate } from '../../utils/date';
-import { getFbSdk } from './facebook.provider';
+import { getFbApi } from './facebook.provider';
 import {
     POST_FIELDS,
     FRIENDS_FIELDS,
@@ -38,7 +38,7 @@ export const fetchEdge = (id, edge, options) => {
     const graphQuery = constructQuery(id, edge, options);
 
     return new Promise((resolve, reject) => {
-        getFbSdk().api(graphQuery, (response) => {
+        getFbApi().api(graphQuery, (response) => {
             if (response.error) {
                 return reject(response.error);
             }

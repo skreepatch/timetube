@@ -15,7 +15,7 @@ import { getQuery } from "../../store/query/query.selectors";
 import { getUI } from "../../store/ui/ui.selectors";
 import { fetchVideos } from "../../store/timetubes/timetubes.actions";
 import { updatePlaying } from "../../store/player/player.actions";
-import {store} from "../../store";
+import { store } from "../../store";
 
 const mapStateToProps = (state) => {
     return {
@@ -35,6 +35,7 @@ const mapDispatchToProps = (dispatch) => {
         updatePlaying: (videoId) => dispatch(updatePlaying(videoId))
     }
 };
+
 @connect(mapStateToProps, mapDispatchToProps)
 export class Timetube extends Component {
     setId(id = this.getTimetubeId()) {
@@ -52,6 +53,7 @@ export class Timetube extends Component {
     }
 
     componentDidMount() {
+        console.log('timetube did mount');
         this.checkLoginStatus();
         this.setId();
     }
@@ -101,12 +103,15 @@ export class Timetube extends Component {
         }
     }
 
+    youtubePlayer() {
+        if(this.props.me.isLoggedIn) {
+            return <Player videoId={this.props.activeVideoId} next={this.playNext()} previous={this.playPrevious()}/>;
+        }
+    }
+
     render() {
-        const player = () => {
-            return this.props.id ? <Player videoId={this.props.activeVideoId} next={this.playNext()} previous={this.playPrevious()}/> : "";
-        };
         return <div className="Timetube">
-            { player() }
+            {this.youtubePlayer()}
             <Search />
             <Channel />
             <Toolbar />

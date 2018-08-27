@@ -5,7 +5,9 @@ import classNames from 'classnames';
 import './Player.css';
 import {getSelected} from "../../store/timetubes/timetubes.selectors";
 import {getPlaying} from "../../store/player/player.selectors";
-import {initializeYoutubeIframeApi, PLAYER_STATUSES} from "../../providers/youtube/youtube.provider";
+import {initYouTubePlayer, PLAYER_STATUSES} from "../../providers/youtube/youtube.provider";
+import {getPlayerReady} from "../../store/ui/ui.selectors";
+import {updateUi} from "../../store/ui/ui.actions";
 
 const currentVideo = (state) => {
     const timetube = getSelected(state);
@@ -19,11 +21,13 @@ const currentVideo = (state) => {
 const mapStateToProps = (state) => ({
     timetube: getSelected(state),
     currentVideo: currentVideo(state),
-    playing: getPlaying(state)
+    playing: getPlaying(state),
+    ready: getPlayerReady(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    updatePlaying: (id) => dispatch(updatePlaying(id))
+    updatePlaying: (id) => dispatch(updatePlaying(id)),
+    updateUi: (update) => dispatch(updateUi(update))
 });
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -40,32 +44,38 @@ export class Player extends Component {
     }
 
     initPlayer() {
-        initializeYoutubeIframeApi(this.YTPlayerRef.current || 'tt_player', {
+        this.player = initYouTubePlayer(this.YTPlayerRef.current || 'tt_player', {
             videoId: this.props.playing || "",
             events: {
                 'onReady': this.onPlayerReady(),
                 'onStateChange': this.onPlayerStateChange()
             }
-        }).then( (youtubePlayerRef) => {
-            this.player = youtubePlayerRef;
         });
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.playing !== prevProps.playing && this.player) {
-            this.player.loadVideoById(this.props.playing);
+            this.loadVideo();
         }
     }
 
-    getSnapshotBeforeUpdate(props) {
-        return props.playing;
+    loadVideo() {
+        this.player.loadVideoById(this.props.playing);
     }
 
-    onPlayerReady(event) {
-        // player ready
+    onPlayerReady() {
+        return () => {
+            this.props.updateUi({
+                key: 'player',
+                value: {
+                    ready: true
+                }
+            });
+            console.log('player ready');
+        };
     }
 
-    onEnded(event) {
+    onEnded() {
         this.playNext();
     }
 
@@ -112,12 +122,7 @@ export class Player extends Component {
         return () => {
             this.player.stopVideo();
             this.props.updatePlaying('');
-            this.setState({ open: false });
         }
-    }
-
-    open() {
-        this.setState({ open: true });
     }
 
     getVideoProperty(key) {
@@ -125,13 +130,13 @@ export class Player extends Component {
     }
 
     render() {
-        const playerClassnames = () => classNames("Player", {
+        const playerClassnames = classNames("Player", {
             playing: this.props.playing,
             open: this.props.playing
         });
         
         return (
-            <div className={playerClassnames()}>
+            <div className={playerClassnames}>
                 <div className="Player-close" onClick={this.close()}><i className="icon-cross"></i></div>
                 <div className="Player-video-title">{this.getVideoProperty("name")}</div>
                 <div className="Player-wrapper">

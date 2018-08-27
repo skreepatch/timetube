@@ -1,13 +1,11 @@
-import {updateQuery} from "./query.actions";
-import {query} from "./query.reducers";
-import {UPDATE_QUERY} from "../../constants/action-types";
+import { UPDATE_QUERY, updateQuery } from "./query.actions";
 
 describe('query actions', () => {
-    describe('updateQuery', () => {
-        it('should create updateQuery action', () => {
-            const query = 'some query';
-            expect(updateQuery(query).type).toBe(UPDATE_QUERY);
-            expect(updateQuery(query).payload).toBe(query);
-        });
-    });
+	describe('updateQuery', () => {
+		it('should create updateQuery action', () => {
+			const query = 'some query';
+			expect(updateQuery(query).type).toBe(UPDATE_QUERY);
+			expect(updateQuery(query).payload).toBe(query);
+		});
+	});
 });

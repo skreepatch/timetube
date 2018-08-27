@@ -2,34 +2,35 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Me } from './me/Me';
-import Logo from './logo/Logo';
+import { Logo } from './logo/Logo';
 import './Header.css';
-import {getLoggedIn, getMe} from "../../store/me/me.selectors";
+import { getLoggedIn, getMe } from "../../store/me/me.selectors";
+
 const mapStateToProps = (state) => {
-    return {
-        isLoggedIn: getLoggedIn(state),
-        me: getMe(state)
-    }
+	return {
+		isLoggedIn: getLoggedIn(state),
+		me: getMe(state)
+	}
 };
 
 @connect(mapStateToProps)
 export class Header extends Component {
-    me() {
-        if (this.props.checking) {
-            return <div className="Checking">checking...</div>
-        } else if (this.props.me) {
-            return <Me />
-        } else {
-            return <Link to="/login">Login with Facebook</Link>
-        }
-    }
+	me() {
+		if (this.props.checking) {
+			return <div className="Checking">checking...</div>
+		} else if (this.props.me) {
+			return <Me/>
+		} else {
+			return <Link to="/login">Login with Facebook</Link>
+		}
+	}
 
-    render() {
-        return (
-            <div className="header-component">
-                <Logo />
-                {this.me()}
-            </div>
-        );
-    }
+	render() {
+		return (
+			<div className="header-component">
+				<Logo/>
+				{this.me()}
+			</div>
+		);
+	}
 }
