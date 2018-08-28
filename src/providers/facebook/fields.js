@@ -1,27 +1,32 @@
-
 export const POST_FIELDS = [
-    'link', 
-    'name', 
-    'message',
-    'description',
-    'picture', 
-    'created_time', 
-    'id'
-  ];
+	'link',
+	'name',
+	'message',
+	'description',
+	'picture',
+	'created_time',
+	'id'
+];
 
 export const FRIENDS_FIELDS = [
-    'name',
-    'picture',
-    'id'
-  ];
+	'name',
+	'picture',
+	'id'
+];
 
 export const LIKES_FIELDS = [
-    'name', 
-    'picture', 
-    'id'
-  ];
+	'name',
+	'picture',
+	'id'
+];
 
 export const REACTIONS_FIELDS = [
-    'created_time', 
-    'id'
-  ];
+	'created_time',
+	'id'
+];
+
+export const ME_FIELDS = [
+	'name',
+	'picture',
+	'permissions'
+];

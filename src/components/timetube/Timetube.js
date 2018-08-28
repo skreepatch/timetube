@@ -18,103 +18,103 @@ import { updatePlaying } from "../../store/player/player.actions";
 import { store } from "../../store";
 
 const mapStateToProps = (state) => {
-    return {
-        id: getId(state),
-        timetube: getSelected(state),
-        me: getMe(state),
-        activeVideoId: getPlaying(state),
-        query: getQuery(state),
-        ui: getUI(state)
-    }
+	return {
+		id: getId(state),
+		timetube: getSelected(state),
+		me: getMe(state),
+		activeVideoId: getPlaying(state),
+		query: getQuery(state),
+		ui: getUI(state)
+	}
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        setId: (id) => dispatch(setId(id)),
-        updateUi: (keyValue) => dispatch(updateUi(keyValue)),
-        updatePlaying: (videoId) => dispatch(updatePlaying(videoId))
-    }
+	return {
+		setId: (id) => dispatch(setId(id)),
+		updateUi: (keyValue) => dispatch(updateUi(keyValue)),
+		updatePlaying: (videoId) => dispatch(updatePlaying(videoId))
+	}
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
 export class Timetube extends Component {
-    setId(id = this.getTimetubeId()) {
-        this.props.setId(id);
-    }
+	setId(id = this.getTimetubeId()) {
+		this.props.setId(id);
+	}
 
-    checkLoginStatus() {
-        if (!this.props.me.isLoggedIn) {
-            this.props.history.push('/');
-        }
-    }
+	checkLoginStatus() {
+		if (!this.props.me.isLoggedIn) {
+			this.props.history.push('/');
+		}
+	}
 
-    getTimetubeId() {
-        return this.props.match.params.timetubeId || this.props.id;
-    }
+	getTimetubeId() {
+		return this.props.match.params.timetubeId || this.props.id;
+	}
 
-    componentDidMount() {
-        console.log('timetube did mount');
-        this.checkLoginStatus();
-        this.setId();
-    }
+	componentDidMount() {
+		console.log('timetube did mount');
+		this.checkLoginStatus();
+		this.setId();
+	}
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (snapshot !== prevProps.id) {
-            this.setId(snapshot);
-            this.scrapPosts(snapshot);
-        }
-    }
+	componentDidUpdate(prevProps, prevState, snapshot) {
+		if (snapshot !== prevProps.id) {
+			this.setId(snapshot);
+			this.scrapPosts(snapshot);
+		}
+	}
 
-    getSnapshotBeforeUpdate(prevProps, prevState) {
-        return prevProps.match.params.timetubeId;
-    }
+	getSnapshotBeforeUpdate(prevProps, prevState) {
+		return prevProps.match.params.timetubeId;
+	}
 
-    scrapPosts(id = this.props.id) {
-        store.dispatch(fetchVideos(id, this.props.me.accessToken));
-    }
+	scrapPosts(id = this.props.id) {
+		store.dispatch(fetchVideos(id, this.props.me.accessToken));
+	}
 
-    getVideoIds() {
-        return Object.keys(this.props.timetube.videos);
-    }
+	getVideoIds() {
+		return Object.keys(this.props.timetube.videos);
+	}
 
-    currentVideoIndex() {
-        return this.getVideoIds().indexOf(this.props.activeVideoId);
-    }
+	currentVideoIndex() {
+		return this.getVideoIds().indexOf(this.props.activeVideoId);
+	}
 
-    nextVideo() {
-        return this.getVideoIds()[this.currentVideoIndex() + 1] || this.getVideoIds()[0];
-    }
-    
-    previousVideo() {
-        const currentIndex = this.currentVideoIndex();
-        const ids = this.getVideoIds();
-        return currentIndex === 0 ? ids[ids.length - 1] : ids[currentIndex - 1];
-    }
+	nextVideo() {
+		return this.getVideoIds()[ this.currentVideoIndex() + 1 ] || this.getVideoIds()[ 0 ];
+	}
 
-    playNext() {
-        return () => {
-            this.props.updatePlaying(this.nextVideo());
-        }
-    }
+	previousVideo() {
+		const currentIndex = this.currentVideoIndex();
+		const ids = this.getVideoIds();
+		return currentIndex === 0 ? ids[ ids.length - 1 ] : ids[ currentIndex - 1 ];
+	}
 
-    playPrevious() {
-        return () => {
-            this.props.updatePlaying(this.previousVideo());
-        }
-    }
+	playNext() {
+		return () => {
+			this.props.updatePlaying(this.nextVideo());
+		}
+	}
 
-    youtubePlayer() {
-        if(this.props.me.isLoggedIn) {
-            return <Player videoId={this.props.activeVideoId} next={this.playNext()} previous={this.playPrevious()}/>;
-        }
-    }
+	playPrevious() {
+		return () => {
+			this.props.updatePlaying(this.previousVideo());
+		}
+	}
 
-    render() {
-        return <div className="Timetube">
-            {this.youtubePlayer()}
-            <Search />
-            <Channel />
-            <Toolbar />
-        </div>
-    }
+	youtubePlayer() {
+		if (this.props.me.isLoggedIn) {
+			return <Player videoId={this.props.activeVideoId} next={this.playNext()} previous={this.playPrevious()}/>;
+		}
+	}
+
+	render() {
+		return <div className="Timetube">
+			{this.youtubePlayer()}
+			<Search/>
+			<Channel/>
+			<Toolbar/>
+		</div>
+	}
 }

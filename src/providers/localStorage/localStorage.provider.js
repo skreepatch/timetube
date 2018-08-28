@@ -23,5 +23,6 @@ export const saveToLocalStorage = (key, value) => {
 	if (!getLocalStorage()) {
 		console.error('Local storage is not available :( ');
 	}
+
 	getLocalStorage().setItem(`${keyPrefix}${key}`, JSON.stringify(value));
 };

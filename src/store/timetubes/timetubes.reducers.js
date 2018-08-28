@@ -20,18 +20,18 @@ export const timetubes = (state = updateFromLocalStorage(), action) => {
 				}
 			};
 		case RECEIVE_TIMETUBE:
-			const currentTimetube = state[ action.payload.id ] || initialItemState;
+			const currentTimetube = state[action.payload.id] || initialItemState;
 			const { data, paging } = action.payload.update;
-			const videos = [ data ].reduce((acc, video) => {
-				acc[ video.videoId ] = video;
+			const videos = [...data].reduce((acc, video) => {
+				acc[video.videoId] = video;
+
 				return acc;
 			}, currentTimetube.videos);
 			const drained = currentTimetube.drained || !paging;
 			const discoveredUntil = !drained && Object.keys(videos).length ? Object.values(videos).slice(-1)[ 0 ].created_time : currentTimetube.discoveredUntil;
-
 			return {
 				...state,
-				[ action.payload.id ]: {
+				[action.payload.id]: {
 					...currentTimetube,
 					fetching: false,
 					discoveredUntil,

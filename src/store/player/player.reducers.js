@@ -1,4 +1,4 @@
-import {UPDATE_PLAYING, UPDATE_VOLUME} from "./player.actions";
+import { UPDATE_PLAYING } from "./player.actions";
 
 export const initialPlayerState = {
 	playing: "",
@@ -10,11 +10,11 @@ export const initialPlayerState = {
 };
 
 export const player = (state = initialPlayerState, action) => {
-    switch (action.type) {
-        case UPDATE_PLAYING:
-            return { ...state, playing: action.payload };
-        default:
-            return state;
-    }
+	switch (action.type) {
+		case UPDATE_PLAYING:
+			return { ...state, playing: action.payload };
+		default:
+			return state;
+	}
 
 };
