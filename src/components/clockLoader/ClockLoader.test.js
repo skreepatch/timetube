@@ -7,6 +7,7 @@ import { ClockLoader } from './ClockLoader';
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('<ClockLoader />', () => {
+
 	it('should render the ClockLoader', () => {
 		const wrapper = shallow(<ClockLoader />);
 		expect(wrapper.find('.Clock-loader').exists()).toBe(true);

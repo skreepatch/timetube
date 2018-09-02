@@ -13,6 +13,26 @@
     will-change: transform;
     overflow: hidden;
     cursor: pointer;
+    object-fit: cover;
+}
+
+.Thumbnail img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: translate(-50%, -50%);
+    will-change: opacity;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.Thumbnail img.loading {
+    opacity: 0;
+}
+.Thumbnail img.ready {
+    opacity: 1;
 }
 
 .Thumbnail:hover {

@@ -9,19 +9,22 @@ import { setId } from "../../store/id/id.actions";
 import { updateUi } from "../../store/ui/ui.actions";
 import { getId } from "../../store/id/id.selectors";
 import { getSelected } from "../../store/timetubes/timetubes.selectors";
-import { getMe } from "../../store/me/me.selectors";
+import { getAccessToken, getLoggedIn } from "../../store/me/me.selectors";
 import { getPlaying } from "../../store/player/player.selectors";
 import { getQuery } from "../../store/query/query.selectors";
 import { getUI } from "../../store/ui/ui.selectors";
 import { fetchVideos } from "../../store/timetubes/timetubes.actions";
 import { updatePlaying } from "../../store/player/player.actions";
 import { store } from "../../store";
+import { Friends } from "../friends/Friends";
+import { arrayFromObject } from "../../utils/array-from-object";
 
 const mapStateToProps = (state) => {
 	return {
 		id: getId(state),
 		timetube: getSelected(state),
-		me: getMe(state),
+		isLoggedIn: getLoggedIn(state),
+		accessToken: getAccessToken(state),
 		activeVideoId: getPlaying(state),
 		query: getQuery(state),
 		ui: getUI(state)
@@ -36,45 +39,63 @@ const mapDispatchToProps = (dispatch) => {
 	}
 };
 
-@connect(mapStateToProps, mapDispatchToProps)
-export class Timetube extends Component {
+export class DisconnectedTimetube extends Component {
 	setId(id = this.getTimetubeId()) {
-		this.props.setId(id);
+		if (id) {
+			this.props.setId(id);
+		}
 	}
 
 	checkLoginStatus() {
-		if (!this.props.me.isLoggedIn) {
-			this.props.history.push('/');
+		if (!this.props.isLoggedIn) {
+			return this.props.history.push('/');
 		}
+		return true;
 	}
 
 	getTimetubeId() {
-		return this.props.match.params.timetubeId || this.props.id;
+		return this.props.id || this.props.match.params.timetubeId;
 	}
 
 	componentDidMount() {
-		console.log('timetube did mount');
-		this.checkLoginStatus();
-		this.setId();
+		console.log('timetube did mount', this.getTimetubeId());
+		this.update();
 	}
 
-	componentDidUpdate(prevProps, prevState, snapshot) {
-		if (snapshot !== prevProps.id) {
-			this.setId(snapshot);
-			this.scrapPosts(snapshot);
+	update(id) {
+		if(this.checkLoginStatus()) {
+			this.setId(id);
+			this.fetchVideos(id);
 		}
 	}
 
-	getSnapshotBeforeUpdate(prevProps, prevState) {
-		return prevProps.match.params.timetubeId;
+	/**
+	 *
+	 * @param props
+	 * @param id
+	 * @returns {*|boolean}
+	 */
+	shouldFetch(id) {
+		return id && id !== this.getTimetubeId();
 	}
 
-	scrapPosts(id = this.props.id) {
-		store.dispatch(fetchVideos(id, this.props.me.accessToken));
+	componentDidUpdate(prevProps, prevState, snapshot) {
+		this.update(snapshot);
+	}
+
+	getSnapshotBeforeUpdate(props, state) {
+		return this.props.match.params.timetubeId;
+	}
+
+	fetchVideos(id = this.getTimetubeId()) {
+		if (this.shouldFetch(id)) {
+			store.dispatch(fetchVideos(id, this.props.accessToken));
+		}
+
 	}
 
 	getVideoIds() {
-		return Object.keys(this.props.timetube.videos);
+		return arrayFromObject(this.props.timetube.videos, 'keys');
 	}
 
 	currentVideoIndex() {
@@ -104,7 +125,7 @@ export class Timetube extends Component {
 	}
 
 	youtubePlayer() {
-		if (this.props.me.isLoggedIn) {
+		if (this.props.isLoggedIn) {
 			return <Player videoId={this.props.activeVideoId} next={this.playNext()} previous={this.playPrevious()}/>;
 		}
 	}
@@ -112,9 +133,12 @@ export class Timetube extends Component {
 	render() {
 		return <div className="Timetube">
 			{this.youtubePlayer()}
-			<Search/>
-			<Channel/>
-			<Toolbar/>
+			<Search />
+			<Channel />
+			<Toolbar />
+			<Friends />
 		</div>
 	}
 }
+
+export const Timetube = connect(mapStateToProps, mapDispatchToProps)(DisconnectedTimetube);

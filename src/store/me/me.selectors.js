@@ -1,7 +1,11 @@
 export const getMe = (state) => {
-    return state.me;
+	return state.me;
 };
 
 export const getLoggedIn = (state) => {
-    return getMe(state).isLoggedIn;
+	return getMe(state).isLoggedIn;
+};
+
+export const getAccessToken = (state) => {
+	return getMe(state).isLoggedIn;
 };

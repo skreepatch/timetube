@@ -8,8 +8,8 @@ const mapStateToProps = (state) => ({
     loading: getLoading(state)
 });
 
-@connect(mapStateToProps)
-export class MainLoader extends Component {
+
+export class DisconnectedMainLoader extends Component {
     render() {
         const loaderClass = classNames('Loader', {
             loading: this.props.loading
@@ -20,3 +20,5 @@ export class MainLoader extends Component {
         </div>;
     }
 }
+
+export const MainLoader = connect(mapStateToProps)(DisconnectedMainLoader);

@@ -13,8 +13,7 @@ const mapStateToProps = (state) => {
 	}
 };
 
-@connect(mapStateToProps)
-export class Header extends Component {
+export class DisconnectedHeader extends Component {
 	me() {
 		if (this.props.checking) {
 			return <div className="Checking">checking...</div>
@@ -34,3 +33,5 @@ export class Header extends Component {
 		);
 	}
 }
+
+export const Header = connect(mapStateToProps)(DisconnectedHeader);

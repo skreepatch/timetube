@@ -14,7 +14,7 @@ it('renders without crashing', () => {
 });
 
 it('should render the main cintainer', () => {
-	const wrapper = shallow(<App store={store}/>);
+	const wrapper = shallow(<App />);
 	expect(wrapper.find('.main').exists()).toBe(true);
 });
 

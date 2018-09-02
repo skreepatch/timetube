@@ -2,6 +2,7 @@ import { updateUi } from "./ui.actions";
 import { ui } from "./ui.reducers";
 
 describe('UI reducer', () => {
+
 	it('should return updated ui state', () => {
 		const update = {
 			key: 'search',

@@ -1,6 +1,6 @@
 import {
 	getError,
-	getFriends,
+	getFriendsUi,
 	getFriendsFetching,
 	getFriendsOpen,
 	getLoading, getPlayer, getPlayerOpen, getPlayerReady,
@@ -10,13 +10,16 @@ import {
 } from "./ui.selectors";
 
 describe('UI selectors', () => {
+
 	describe('getUI', () => {
+
 		it('should return ui state', () => {
 			expect(getUI({ui: 'ui'})).toBe('ui');
 		});
 	});
 
 	describe('getLoading', () => {
+
 		it('should return ui.loading state', () => {
 			expect(getLoading({
 				ui: {
@@ -27,6 +30,7 @@ describe('UI selectors', () => {
 	});
 
 	describe('getError', () => {
+
 		it('should return ui.error state', () => {
 			const errorMessage = 'something went wrong';
 			expect(getError({
@@ -37,9 +41,10 @@ describe('UI selectors', () => {
 		});
 	});
 
-	describe('getFriends', () => {
+	describe('getFriendsUi', () => {
+
 		it('should return ui.friends state', () => {
-			expect(getFriends({
+			expect(getFriendsUi({
 				ui: {
 					friends: 'friends'
 				}
@@ -48,6 +53,7 @@ describe('UI selectors', () => {
 	});
 
 	describe('getFriendsOpen', () => {
+
 		it('should return ui.friends.open state', () => {
 			expect(getFriendsOpen({
 				ui: {
@@ -59,20 +65,8 @@ describe('UI selectors', () => {
 		});
 	});
 
-
-	describe('getFriendsFetching', () => {
-		it('should return ui.friends.fetching state', () => {
-			expect(getFriendsFetching({
-				ui: {
-					friends: {
-						fetching: true
-					}
-				}
-			})).toBe(true);
-		});
-	});
-
 	describe('getSearch', () => {
+
 		it('should return ui.search state', () => {
 			expect(getSearch({
 				ui: {
@@ -83,6 +77,7 @@ describe('UI selectors', () => {
 	});
 
 	describe('getSearchOpen', () => {
+
 		it('should return ui.search.open state', () => {
 			expect(getSearchOpen({
 				ui: {
@@ -95,6 +90,7 @@ describe('UI selectors', () => {
 	});
 
 	describe('getPlayer', () => {
+
 		it('should return ui.player state', () => {
 			expect(getPlayer({
 				ui: {
@@ -105,6 +101,7 @@ describe('UI selectors', () => {
 	});
 
 	describe('getPlayerOpen', () => {
+
 		it('should return ui.player.open state', () => {
 			expect(getPlayerOpen({
 				ui: {
@@ -117,6 +114,7 @@ describe('UI selectors', () => {
 	});
 
 	describe('getPlayerReady', () => {
+
 		it('should return ui.player.ready state', () => {
 			expect(getPlayerReady({
 				ui: {

@@ -30,8 +30,7 @@ const mapDispatchToProps = (dispatch) => ({
     updateUi: (update) => dispatch(updateUi(update))
 });
 
-@connect(mapStateToProps, mapDispatchToProps)
-export class Player extends Component {
+export class DisconnectedPlayer extends Component {
 
     constructor(props) {
         super(props);
@@ -150,3 +149,5 @@ export class Player extends Component {
         )
     }
 }
+
+export const Player = connect(mapStateToProps, mapDispatchToProps)(DisconnectedPlayer);

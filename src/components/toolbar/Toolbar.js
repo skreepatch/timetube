@@ -19,8 +19,7 @@ const mapStateToProps = (state) => ({
 	timetube: getSelected(state)
 });
 
-@connect(mapStateToProps)
-export class Toolbar extends Component {
+export class DisconnectedToolbar extends Component {
 	discoverMore() {
 		return () => {
 			store.dispatch(fetchVideos(this.props.id, this.props.me.accessToken))
@@ -82,3 +81,5 @@ export class Toolbar extends Component {
 		</div>
 	}
 }
+
+export const Toolbar = connect(mapStateToProps)(DisconnectedToolbar);

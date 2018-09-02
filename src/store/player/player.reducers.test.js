@@ -1,7 +1,8 @@
-import { player, initialPlayerState } from "./player.reducers";
+import { initialPlayerState, player } from "./player.reducers";
 import { updatePlaying } from "./player.actions";
 
 describe('player reducers', () => {
+
 	it('should return updated player state', () => {
 		const videoId = 'videoId';
 		const videoId2 = 'videoId2';

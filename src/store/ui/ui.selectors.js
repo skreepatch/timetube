@@ -10,17 +10,12 @@ export const getError = (state) => {
     return getUI(state).error;
 };
 
-export const getFriends = (state) => {
+export const getFriendsUi = (state) => {
     return getUI(state).friends;
 };
 
 export const getFriendsOpen = (state) => {
-  return getFriends(state).open;
-};
-
-
-export const getFriendsFetching = (state) => {
-    return getFriends(state).fetching;
+  return getFriendsUi(state).open;
 };
 
 export const getSearch = (state) => {

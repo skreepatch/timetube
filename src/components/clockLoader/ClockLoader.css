@@ -1,12 +1,13 @@
 .Clock-loader {
-    --clock-radius: 10vw;
-    --clock-border-width: 6px;
+    --clock-radius: 60px;
+    --clock-border-width: 3px;
     --clock-border-color: var(--light);
     --clock-speed: 12s;
     --arrows-width: 2px;
     --arrows-color: var(--light);
-  }
-  .Clock-loader-overlay {
+}
+
+.Clock-loader-overlay {
     position: absolute;
     left: 0;
     right: 0;
@@ -20,22 +21,24 @@
     transition: all 0.2s ease-in-out;
     transform: rotateX(-90deg) translateY(-100%);
     background: rgba(0, 0, 0, 0.8);
-  }
-  .Clock-loader-overlay.show {
-      transform: rotateX(0deg) translateY(0%);
-      opacity: 1;
-  }
-  .Clock-loader {
+}
+
+.Clock-loader-overlay.show {
+    transform: rotateX(0deg) translateY(0%);
+    opacity: 1;
+}
+
+.Clock-loader {
     display: block;
     width: calc(var(--clock-radius) * 2);
     height: calc(var(--clock-radius) * 2);
     border-radius: 50%;
     border: var(--clock-border-width) solid var(--clock-border-color);
     position: relative;
-  }
-  
-  .Clock-loader:before,
-  .Clock-loader:after {
+}
+
+.Clock-loader:before,
+.Clock-loader:after {
     content: '';
     position: absolute;
     width: var(--arrows-width);
@@ -45,28 +48,28 @@
     transform-origin: center bottom;
     border-radius: calc(var(--arrows-width) / 2);
     box-sizing: border-box;
-  }
-  
-  .Clock-loader:before {
+}
+
+.Clock-loader:before {
     height: calc(var(--clock-radius) * 0.6);
-    width: calc(var(--arrows-width) * 2);
+    width: calc(var(--arrows-width) * 2.5);
     left: calc(50% - calc(var(--arrows-width)));
     border-radius: var(--arrows-width);
     animation: spin var(--clock-speed) infinite linear;
-  }
-  
-  .Clock-loader:after {
-    height: calc(var(--clock-radius) * 0.8);
+}
+
+.Clock-loader:after {
+    height: calc(var(--clock-radius) * 0.9);
     animation: spin calc(var(--clock-speed) / 12) infinite linear;
-  }
-  
-  @keyframes spin {
+}
+
+@keyframes spin {
     0% {
-      transform: rotate(0deg);
+        transform: rotate(0deg);
     }
     100% {
-      transform: rotate(-360deg);
+        transform: rotate(-360deg);
     }
-  }
+}
   
   

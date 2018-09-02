@@ -1,6 +1,7 @@
 import { updateUi } from "./ui.actions";
 
 describe('UI action creators', () => {
+
 	describe('updateUi action creator', () => {
 		it('should create updateUi action', () => {
 			const key = 'search';

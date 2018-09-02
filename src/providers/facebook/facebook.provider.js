@@ -1,7 +1,7 @@
 import { store } from "../../store/index";
 import { loggedInOut, updateMe } from "../../store/me/me.actions";
 import { AUTH_STATUSES } from "./facebook.constants";
-import { APP_ID } from "../../config/facebookAppId";
+import { DEV_APP_ID } from "./facebookAppId";
 import { updateUi } from "../../store/ui/ui.actions";
 
 const statusChange = (response) => {
@@ -30,7 +30,7 @@ export const initializeFacebookApi = (statusChangeCallback = statusChange) => {
 	return new Promise((resolve) => {
 		window.fbAsyncInit = function () {
 			getFbApi().init({
-				appId: APP_ID,
+				appId: DEV_APP_ID,
 				autoLogAppEvents: true,
 				xfbml: true,
 				version: 'v3.0'

@@ -1,6 +1,7 @@
 import { getMyTimetube, getSelected, getTimetubes } from "./timetubes.selectors";
 
 describe('timetube selectors', () => {
+
 	describe('getTimetubes selector', () => {
 		it('should return timetubes store section from state', () => {
 			const timetubes = 'Hey';
@@ -8,14 +9,16 @@ describe('timetube selectors', () => {
 			expect(getTimetubes(state)).toBe(timetubes);
 		});
 	});
+
 	describe('getSelected', () => {
+
 		it('should return the selected timetube by key from timetubes store section', () => {
 			const selected = 'Yo';
 			const selectedId = 'theId';
 			const state = {
 				id: selectedId,
 				timetubes: {
-					[ selectedId ]: selected
+					[selectedId]: selected
 				}
 			};
 			expect(getSelected(state)).toBe(selected);
@@ -23,6 +26,7 @@ describe('timetube selectors', () => {
 	});
 
 	describe('getMyTimetube', () => {
+
 		it('should return the timetube of the currently logged in use', () => {
 			const selected = 'Yo';
 			const selectedId = 'theId';
@@ -33,7 +37,7 @@ describe('timetube selectors', () => {
 				id: selectedId,
 				me: me,
 				timetubes: {
-					[ me.id ]: selected
+					[me.id]: selected
 				}
 			};
 			expect(getMyTimetube(state)).toBe(selected);
@@ -42,13 +46,14 @@ describe('timetube selectors', () => {
 
 
 	describe('getSelectedTimetubePaging', () => {
+
 		it('should return the paging object of the selected timetube by key from timetubes store section', () => {
 			const selected = { paging: {} };
 			const selectedId = 'myId';
 			const state = {
 				id: selectedId,
 				timetubes: {
-					[ selectedId ]: selected
+					[selectedId]: selected
 				}
 			};
 			expect(getSelected(state).paging).toBe(selected.paging);
@@ -56,13 +61,14 @@ describe('timetube selectors', () => {
 	});
 
 	describe('getSelectedTimetubeVideos', () => {
+
 		it('should return the videos object of the selected timetube by key from timetubes store section', () => {
 			const selected = { videos: {} };
 			const selectedId = 'myId';
 			const state = {
 				id: selectedId,
 				timetubes: {
-					[ selectedId ]: selected
+					[selectedId]: selected
 				}
 			};
 			expect(getSelected(state).videos).toBe(selected.videos);

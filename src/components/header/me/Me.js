@@ -3,19 +3,18 @@ import { connect } from 'react-redux';
 import { UserLink } from '../../userLink/User-link';
 import './Me.css';
 import {getMe} from "../../../store/me/me.selectors";
-import {getFriends} from "../../../store/ui/ui.selectors";
+import {getFriendsUi} from "../../../store/ui/ui.selectors";
 import {getMyTimetube} from "../../../store/timetubes/timetubes.selectors";
 
 const mapStateToProps = (state) => {
     return {
         me: getMe(state),
-        friends: getFriends(state),
+        friends: getFriendsUi(state),
         myTimetube: getMyTimetube(state)
     }
 };
 
-@connect(mapStateToProps)
-export class Me extends Component {
+export class DisconnectedMe extends Component {
 
     profile() {
         if (this.props.me.error) {
@@ -42,3 +41,5 @@ export class Me extends Component {
         )
     }
 }
+
+export const Me = connect(mapStateToProps)(DisconnectedMe);

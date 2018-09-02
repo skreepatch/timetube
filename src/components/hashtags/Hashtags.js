@@ -16,8 +16,7 @@ const mapDispatchToProps = (dispatch) => ({
     updateQuery: (query) => dispatch(updateQuery(query))
 });
 
-@connect(mapStateToProps, mapDispatchToProps)
-export class Hashtags extends Component {
+export class DisconnectedHashtags extends Component {
     searchTag() {
         return (event) => {
             const tag = event.currentTarget.dataset.tag &&
@@ -63,3 +62,5 @@ export class Hashtags extends Component {
         </div>
     }
 }
+
+export const Hashtags = connect(mapStateToProps, mapDispatchToProps)(DisconnectedHashtags);

@@ -4,8 +4,7 @@ const initialState =  {
     error: "",
     loading: true,
     friends: {
-        open: false,
-        fetching: false
+        open: false
     },
     search: {
         open: false,
