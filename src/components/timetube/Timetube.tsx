@@ -65,7 +65,7 @@ export class DisconnectedTimetube extends Component<ITimetubeProps> {
 	protected subscriptions: any[] = [];
 
 	public componentDidMount() {
-		this.subscriptions.push(this.props.history.listen( this.onRouteChange() ));
+		this.subscriptions.push(this.listenToHistoryChange());
 		this.update(this.getIdFromRoute());
 	}
 
@@ -82,6 +82,10 @@ export class DisconnectedTimetube extends Component<ITimetubeProps> {
 			<Channel />
 			<Toolbar />
 		</div>
+	}
+
+	private listenToHistoryChange() {
+		return this.props.history.listen(this.onRouteChange());
 	}
 
 	private youTubePlayer() {
@@ -165,7 +169,9 @@ export class DisconnectedTimetube extends Component<ITimetubeProps> {
 	private onRouteChange() {
 		return (route: any) => {
 			const timetubeId = route.pathname.split('/').pop();
-			this.update(timetubeId);
+			if (timetubeId.length > 1) {
+				this.update(timetubeId);
+			}
 		}
 	}
 }
