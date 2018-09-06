@@ -1,7 +1,7 @@
 a.User-link {
     display: flex;
     flex: 0 0 auto;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     text-decoration: none;
     color: #a2a2a2;

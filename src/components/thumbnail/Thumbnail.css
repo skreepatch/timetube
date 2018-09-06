@@ -5,6 +5,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    background-color: rgba(205,205,205,0.7);
     border: 1px solid #f2f2f2;
     border-radius: 4px;
     box-shadow: none;
@@ -20,7 +21,8 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    min-width: 100%;
+    max-width: 110%;
+    min-height: 100%;
     object-fit: cover;
     object-position: center;
     transform: translate(-50%, -50%);
@@ -45,7 +47,7 @@
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0px;
+    bottom: 0;
     padding: calc(var(--grid-gap) / 2);
     display: inline-flex;
     justify-content: center;

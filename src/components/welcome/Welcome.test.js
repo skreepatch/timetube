@@ -2,8 +2,6 @@ import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { shallow } from 'enzyme';
 import { DisconnectedWelcome } from './Welcome';
-import { loggedInOut, updateMe } from "../../store/me/me.actions";
-import { receiveTimetube } from "../../store/timetubes/timetubes.actions";
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -42,13 +40,13 @@ describe('<Welcome />', () => {
 
 	it('should render the insights for existing data', () => {
 		const me = {
-			isLoggedIn: true,
-			id: 'me'
+			id: 'me',
+			isLoggedIn: true
 		};
 
 		const timetube = {
-			videos: { test: {}, test2: {}},
-			discoveredUntil: 11223344556
+			discoveredUntil: 11223344556,
+			videos: { test: {}, test2: {}}
 		};
 
 		const wrapper = shallow(<DisconnectedWelcome me={me} timetube={timetube}/>);

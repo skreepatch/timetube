@@ -1,0 +1,1 @@
+export type FbEdgeType = 'posts' | 'friends' | 'likes' | 'reactions';

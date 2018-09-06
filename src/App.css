@@ -1,19 +1,38 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 @import '/assets/icomoon/style.css';
+
 ::-webkit-scrollbar {
     display: none;
-}             /* 1 */
-::-webkit-scrollbar-button {}      /* 2 */
-::-webkit-scrollbar-track {}       /* 3 */
-::-webkit-scrollbar-track-piece {} /* 4 */
-::-webkit-scrollbar-thumb {}       /* 5 */
-::-webkit-scrollbar-corner {}      /* 6 */
-::-webkit-resizer {} 
+}
 
+/* 1 */
+::-webkit-scrollbar-button {
+}
+
+/* 2 */
+::-webkit-scrollbar-track {
+}
+
+/* 3 */
+::-webkit-scrollbar-track-piece {
+}
+
+/* 4 */
+::-webkit-scrollbar-thumb {
+}
+
+/* 5 */
+::-webkit-scrollbar-corner {
+}
+
+/* 6 */
+::-webkit-resizer {
+}
 
 body * {
     box-sizing: border-box;
 }
+
 #root {
     position: absolute;
     top: 0;
@@ -24,18 +43,24 @@ body * {
 }
 
 .main {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 100%;
-  max-width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 100%;
+    max-width: 100%;
     background: url("/assets/images/backgrounds/6e351e2f.png");
-} 
+}
 
 .main-wrapper {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
-  color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    color: var(--text-color);
 }
 
 .primary {
