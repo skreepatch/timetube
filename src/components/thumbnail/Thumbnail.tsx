@@ -41,7 +41,8 @@ export class Thumbnail extends Component<IThumbnailProps, IThumbnailState> {
 
 	private preloadImage() {
 		if (this.imageRef.current){
-			this.imageRef.current.onload = () => {
+			const current = this.imageRef.current;
+			current.onload = () => {
 				this.setState({ ready: true });
 			};
 			this.imageRef.current.src = this.props.video.thumbnail;

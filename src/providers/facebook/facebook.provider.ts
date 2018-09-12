@@ -78,5 +78,7 @@ export const getFbApi = () => {
 };
 
 export const fbLogin = () => {
-	return getFbApi().login(statusChange, {scope: 'public_profile,user_posts,user_friends'});
+	return getFbApi().login(statusChange, {
+		scope: 'public_profile,user_posts,user_friends'
+	});
 };

@@ -9,7 +9,7 @@ import { getPlaying } from "../../store/player/player.selectors";
 import { IRootState } from "../../store/rootReducer";
 import { ITimetube } from "../../store/timetubes/timetubes.reducers";
 import { getSelected } from "../../store/timetubes/timetubes.selectors";
-import { IUiPlayloadType, updateUi } from "../../store/ui/ui.actions";
+import { IUiPayloadType, updateUi } from "../../store/ui/ui.actions";
 import { getPlayerReady } from "../../store/ui/ui.selectors";
 import { ITimetubeVideo } from "../../utils/video";
 import './Player.css';
@@ -44,7 +44,7 @@ const mapStateToProps = (state: IRootState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
 	updatePlaying: (id: string) => dispatch(updatePlaying(id)),
-	updateUi: (update: IUiPlayloadType) => dispatch(updateUi(update))
+	updateUi: (update: IUiPayloadType) => dispatch(updateUi(update))
 });
 
 export class DisconnectedPlayer extends Component<IPlayerProps> {

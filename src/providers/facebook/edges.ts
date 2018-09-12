@@ -46,11 +46,12 @@ export const fetchEdge = (id: UserId, edge: FbEdgeType, options?: IEdgeOptions):
 		getFbApi().api(graphQuery, (response: IFbEdge<any>) => {
 			if (response.error) {
 				reject(response.error);
-			}
-			const entities = response[edge];
-			const { data, paging } = entities;
+			} else {
+				const entities = response[edge];
+				const { data, paging } = entities;
 
-			resolve({ data, paging });
+				resolve({ data, paging });
+			}
 		});
 	});
 };

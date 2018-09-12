@@ -14,7 +14,7 @@ import { IRootState } from "../../store/rootReducer";
 import { fetchVideos } from "../../store/timetubes/timetubes.actions";
 import { ITimetube } from "../../store/timetubes/timetubes.reducers";
 import { getSelected } from "../../store/timetubes/timetubes.selectors";
-import { IUiPlayloadType, updateUi } from "../../store/ui/ui.actions";
+import { IUiPayloadType, updateUi } from "../../store/ui/ui.actions";
 import { IUiState } from "../../store/ui/ui.reducers";
 import { getUI } from "../../store/ui/ui.selectors";
 import { arrayFromObject } from "../../utils/array-from-object";
@@ -57,7 +57,7 @@ const mapDispatchToProps = (dispatch: Dispatch | any) => {
 		fetchVideos: (id: UserId, accessToken: string) => dispatch(fetchVideos(id, accessToken)),
 		setId: (id: UserId) => dispatch(setId(id)),
 		updatePlaying: (videoId: string) => dispatch(updatePlaying(videoId)),
-		updateUi: (keyValue: IUiPlayloadType) => dispatch(updateUi(keyValue))
+		updateUi: (keyValue: IUiPayloadType) => dispatch(updateUi(keyValue))
 	}
 };
 
@@ -71,7 +71,7 @@ export class DisconnectedTimetube extends Component<ITimetubeProps> {
 
 	public componentWillUnmount() {
 		if (this.subscriptions.length) {
-			this.subscriptions.forEach( (subscription) => subscription());
+			this.subscriptions.forEach( (unsubscribe) => unsubscribe());
 		}
 	}
 
@@ -82,6 +82,21 @@ export class DisconnectedTimetube extends Component<ITimetubeProps> {
 			<Channel />
 			<Toolbar />
 		</div>
+	}
+
+	private update(id: UserId) {
+		this.checkLoginStatus();
+		if (this.shouldFetch(id)) {
+			this.fetchVideos(id).catch( () => {
+				this.props.updateUi(
+					{
+						key: 'loading',
+						value: false
+					}
+				)
+			});
+			this.setId(id);
+		}
 	}
 
 	private listenToHistoryChange() {
@@ -96,15 +111,6 @@ export class DisconnectedTimetube extends Component<ITimetubeProps> {
 		}
 	}
 
-	private update(id: UserId) {
-		if(this.checkLoginStatus()) {
-			if (this.shouldFetch(id)) {
-				this.fetchVideos(id);
-				this.setId(id);
-			}
-		}
-	}
-
 	/**
 	 *
 	 * @param props
@@ -115,8 +121,8 @@ export class DisconnectedTimetube extends Component<ITimetubeProps> {
 		return id && id !== this.props.id;
 	}
 
-	private fetchVideos(id = this.getIdFromRoute()): void {
-		this.props.fetchVideos(id, this.props.accessToken, {});
+	private fetchVideos(id = this.getIdFromRoute()): Promise<any> {
+		return this.props.fetchVideos(id, this.props.accessToken, {});
 	}
 
 	private getVideoIds() {
@@ -167,9 +173,10 @@ export class DisconnectedTimetube extends Component<ITimetubeProps> {
 	}
 
 	private onRouteChange() {
-		return (route: any) => {
-			const timetubeId = route.pathname.split('/').pop();
-			if (timetubeId.length > 1) {
+		return (route: any): void => {
+			const { pathname } = route;
+			if (pathname.indexOf('channel') > -1) {
+				const timetubeId = pathname.split('/').pop();
 				this.update(timetubeId);
 			}
 		}
