@@ -9,12 +9,13 @@ export interface ITimetube {
 	discoveredUntil: string | number;
 	drained: boolean;
 	fetching: boolean;
-	paging: IFbPaging,
-	videos: {[key: string]: ITimetubeVideo}
+	paging: IFbPaging;
+	videos: {[key: string]: ITimetubeVideo};
+	error?: string;
 }
 
 export const initialTimetubeState = {
-	discoveredUntil: null,
+	discoveredUntil: "",
 	drained: false,
 	fetching: false,
 	paging: {},

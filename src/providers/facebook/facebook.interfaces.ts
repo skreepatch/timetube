@@ -35,6 +35,6 @@ export interface IFbUser {
 	id: UserId,
 	name: string,
 	picture: IFbEdge<IFbPicture>,
-	accessToken?: string,
-	link?: string
+	accessToken: string,
+	link: string
 }

@@ -36,7 +36,7 @@ export class DisconnectedMe extends React.Component<IMeProps> {
 			return <div className="error">Opps, something went wrong :(</div>
 		}
 
-		if (this.props.me.name) {
+		if (this.props.me.name && this.props.me.picture) {
 			return <UserLink
 				userId={this.props.me.id}
 				name={this.props.me.name}

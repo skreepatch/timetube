@@ -5,7 +5,6 @@ import { getTimestampFromDate } from "./date";
 export type VideoProviderType = 'youtube';
 
 export interface ITimetubeVideo extends IFbPost {
-	provider: VideoProviderType
 	thumbnail: string;
 	videoId: string;
 	videoUrl: string;
@@ -50,7 +49,6 @@ export const parseVideoURL = (url: string): Partial<ITimetubeVideo> => {
 	const youtubeId = youtubeParser(url);
 	if (youtubeId) {
 		return {
-			provider: "youtube",
 			thumbnail: `https://img.youtube.com/vi/${youtubeId}/${THUMB_QUALITY}.jpg`,
 			videoId: youtubeId,
 			videoUrl: `https://www.youtube.com/embed/${youtubeId}?rel=0`

@@ -2,7 +2,7 @@ import { IFbUser } from "../../providers/facebook/facebook.interfaces";
 import { IAction } from "../state.interfaces";
 import { LOGGED_IN_OUT, UPDATE_ME } from "./me.actions";
 
-export interface IMeState extends IFbUser {
+export interface IMeState extends Partial<IFbUser> {
 	isLoggedIn: boolean;
 	error?: string;
 }
