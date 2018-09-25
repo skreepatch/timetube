@@ -4,7 +4,7 @@ import { updateUi } from "../../store/ui/ui.actions";
 import { secondsToMilliseconds } from "../../utils/date";
 import { AUTH_STATUSES } from "./facebook.constants";
 import { IFbUser } from "./facebook.interfaces";
-import { DEV_APP_ID } from "./facebookAppId";
+import { APP_ID } from "./facebookAppId";
 import Timer = NodeJS.Timer;
 
 const statusChange = (response: any) => {
@@ -47,7 +47,7 @@ export const initializeFacebookApi = (statusChangeCallback = statusChange) => {
 	return new Promise((resolve) => {
 		(window as any).fbAsyncInit = (): void => {
 			getFbApi().init({
-				appId: DEV_APP_ID,
+				appId: APP_ID,
 				autoLogAppEvents: true,
 				version: 'v3.0',
 				xfbml: true

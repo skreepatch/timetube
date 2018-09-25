@@ -1,6 +1,6 @@
 import * as classNames from 'classnames';
 import * as React from 'react';
-import { ChangeEvent, Component, RefObject } from 'react';
+import { ChangeEvent, Component, FormEvent, RefObject } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from "redux";
 import { updateQuery } from "../../store/query/query.actions";
@@ -39,6 +39,7 @@ const mapStateToProps = (state: IRootState) => {
 export class DisconnectedSearch extends Component<ISearchProps> {
 
 	protected searchInput: RefObject<HTMLInputElement>;
+	protected searchForm: RefObject<HTMLFormElement>;
 
 	constructor(props: ISearchProps) {
 		super(props);
@@ -46,6 +47,7 @@ export class DisconnectedSearch extends Component<ISearchProps> {
 		this.state = { ...this.props.query };
 
 		this.searchInput = React.createRef();
+		this.searchForm = React.createRef();
 	}
 
 	public componentDidMount(): void {
@@ -60,7 +62,7 @@ export class DisconnectedSearch extends Component<ISearchProps> {
 			open: this.props.ui.search.open
 		});
 		return <div className={searchClass}>
-			<form id="search">
+			<form id="search" ref={this.searchForm} onSubmit={this.handleSubmit}>
 				<input type="text" id="searchTerm"
 					   onChange={this.handleChange()}
 					   value={this.props.query.searchTerm}
@@ -69,6 +71,10 @@ export class DisconnectedSearch extends Component<ISearchProps> {
 			</form>
 			<Hashtags/>
 		</div>
+	}
+
+	private handleSubmit(event: FormEvent) {
+		event.preventDefault();
 	}
 
 	private handleChange() {

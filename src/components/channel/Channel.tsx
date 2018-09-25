@@ -7,7 +7,7 @@ import { getMe } from "../../store/me/me.selectors";
 import { getSearchterm } from "../../store/query/query.selectors";
 import { getSelected } from "../../store/timetubes/timetubes.selectors";
 import { arrayFromObject } from "../../utils/array-from-object";
-import { sortByKey } from "../../utils/video";
+import { sortByDate } from "../../utils/video";
 import { Gallery } from '../gallery/Gallery';
 import './Channel.css';
 
@@ -28,12 +28,7 @@ const mapStateToProps = (state: any): IChannelProps => {
 	}
 };
 
-/**
- * TODO: fancy, we need to discus about decorators. They sometimes come at a cost of not knowing what is happening and harder build
- */
-
-export class DisconnectedChannel extends Component {
-	public props: IChannelProps;
+export class DisconnectedChannel extends Component<IChannelProps> {
 
     public render() {
         return <div className="Channel">
@@ -69,7 +64,7 @@ export class DisconnectedChannel extends Component {
 
 		this.saveToLocalStorage();
 
-		return sortByKey(videos, 'created_time');
+		return sortByDate(videos, 'created_time');
 	}
 }
 

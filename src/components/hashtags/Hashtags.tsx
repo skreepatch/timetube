@@ -31,6 +31,7 @@ const mapDispatchToProps = (dispatch: any) => ({
 });
 
 export class DisconnectedHashtags extends Component<IHashtagsProps> {
+
 	public render() {
 		const tagClassNames = (tag: string) => classNames('hashtag', {
 			active: this.props.searchTerm === tag
@@ -38,17 +39,23 @@ export class DisconnectedHashtags extends Component<IHashtagsProps> {
 
 		return <div className="Hashtags">
 			{
-				arrayFromObject(this.tagsCollection, 'keys').map((tag: string) => {
-					return <div className={tagClassNames(tag)} key={tag} onClick={this.searchTag()} data-tag={tag}>{tag}
-						<span className="tagCount">{this.tagsCollection[tag]}</span></div>;
-				})
+				this.getSortedTags()
+					.map((tag: any) => {
+						const [key, value] = tag;
+						return <div className={tagClassNames(key)}
+									key={key}
+									onClick={this.searchTag()}
+									data-tag={key}>{key}
+							<span className="tagCount">{value}</span>
+						</div>;
+					})
 			}
 		</div>
 	}
 
-	private get tagsCollection() {
+	private tagsCollection() {
 		if (this.props.timetube && this.props.timetube.videos) {
-			return arrayFromObject(this.props.timetube.videos,'values')
+			return arrayFromObject(this.props.timetube.videos, 'values')
 				.reduce((tags: {}, video: ITimetubeVideo) => {
 					const searchIn = video.message + video.description + video.name;
 					const videoTags = searchIn.match(/(?:^|\s)(?:#)\w+/gim);
@@ -66,9 +73,16 @@ export class DisconnectedHashtags extends Component<IHashtagsProps> {
 					return tags;
 				}, {});
 		}
+
 		return {};
 	}
 
+	private getSortedTags() {
+		return arrayFromObject(this.tagsCollection(), 'entries')
+			.sort( (a: any, b: any) => {
+				return b[1] - a[1];
+			});
+	}
 	private searchTag() {
 		return (event: MouseEvent) => {
 			const currentTarget = event.currentTarget as HTMLElement;

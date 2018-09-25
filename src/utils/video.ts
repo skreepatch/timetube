@@ -58,7 +58,7 @@ export const parseVideoURL = (url: string): Partial<ITimetubeVideo> => {
 	return {} as Partial<ITimetubeVideo>;
 };
 
-export const sortByKey = (list: any[], key: string) => {
+export const sortByDate = (list: any[], key: string) => {
 	return list.sort((a, b) => {
 		const dateA = getTimestampFromDate(a[key]);
 		const dateB = getTimestampFromDate(b[key]);

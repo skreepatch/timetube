@@ -177,7 +177,9 @@ export class DisconnectedTimetube extends Component<ITimetubeProps> {
 			const { pathname } = route;
 			if (pathname.indexOf('channel') > -1) {
 				const timetubeId = pathname.split('/').pop();
-				this.update(timetubeId);
+				if (timetubeId !== this.props.id) {
+					this.update(timetubeId);
+				}
 			}
 		}
 	}
